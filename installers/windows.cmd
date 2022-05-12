@@ -9,8 +9,8 @@ echo TempPath: %tmpPath%
 for /f "tokens=4-6 delims=. " %%i in ('ver') do set VERSION=%%i
 for /f "tokens=4-6 delims=. " %%i in ('ver') do set SUB_VERSION=%%k
 
-echo VERSION: %VERSION%
-echo VERSION2: %SUB_VERSION%
+echo VERSION: "%VERSION%"
+echo VERSION2: "%SUB_VERSION%"
 
 
 if "%VERSION%" == "10" if "%SUB_VERSION%" != "22000" goto install_10
