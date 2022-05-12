@@ -1,4 +1,5 @@
 @echo off
+
 wsl --install > nul 2>&1
 wsl --update
 wsl --shutdown

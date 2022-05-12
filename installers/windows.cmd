@@ -27,7 +27,7 @@ exit 1
 
 :install_10
 echo [96mDownloading  Windows [93m100[96m Installer...[0m
-del /f/s/q %tmpPath%  > nul 2>&1
+del /f/s/q %tmpPath% > nul 2>&1
 rmdir /s/q %tmpPath%
 mkdir %tmpPath% > nul 2>&1
 curl --ssl --silent %repo%/installers/win/install.cmd > %tmpPath%\install.cmd
@@ -39,7 +39,7 @@ goto end
 
 :install_11
 echo [96mDownloading  Windows [93m11[96m Installer...[0m
-del /f/s/q %tmpPath%  > nul 2>&1
+del /f/s/q %tmpPath% > nul 2>&1
 rmdir /s/q %tmpPath%
 mkdir %tmpPath% > nul 2>&1
 curl --ssl --silent %repo%/installers/win/install.cmd > %tmpPath%\install.cmd

@@ -1,10 +1,7 @@
 @echo off
 
+winget list Canonical.Ubuntu.2004 > nul 2>&1 && goto ubuntuInstalled
 
-winget list Canonical.Ubuntu.2004 > nul 2>&1 || goto installUbuntu
-
-
-:installUbuntu
 echo [96mInstalling Ubuntu 20.04[0m
 winget install Canonical.Ubuntu.2004 --accept-package-agreements --accept-source-agreements
 rem Get the file name of the ubuntu executable
@@ -24,16 +21,20 @@ echo [93m
 pause
 echo [0m
 
-taskkill /IM "ubuntu2004.exe" /F
-
+taskkill /IM "ubuntu2004.exe" /F > nul 2>&1
 wsl -t Ubuntu-20.04
 
-wsl -d Ubuntu-20.04 --cd ~ curl --ssl https://raw.githubusercontent.com/cpbuildtools/devcontainer-ngdotnet/release/latest/install/install_wsl.sh -o install.sh
-wsl -d Ubuntu-20.04 --cd ~ chmod +x install.sh
-wsl -d Ubuntu-20.04 --cd ~ ./install.sh --appdata="%appdata%"
+:ubuntuInstalled
 
-wsl -t Ubuntu-20.04
 
-wsl -d Ubuntu-20.04 --cd ~ curl --ssl https://raw.githubusercontent.com/cpbuildtools/devcontainer-ngdotnet/release/latest/install/initialize_wsl.sh -o initialize.sh
-wsl -d Ubuntu-20.04 --cd ~ chmod +x initialize.sh
-wsl -d Ubuntu-20.04 --cd ~ ./initialize.sh --appdata="%appdata%" 
+echo repo: %repo%
+
+rem wsl -d Ubuntu-20.04 --cd ~ curl --ssl https://raw.githubusercontent.com/cpbuildtools/devcontainer-ngdotnet/release/latest/install/install_wsl.sh -o install.sh
+rem wsl -d Ubuntu-20.04 --cd ~ chmod +x install.sh
+rem wsl -d Ubuntu-20.04 --cd ~ ./install.sh --appdata="%appdata%"
+
+rem wsl -t Ubuntu-20.04
+
+rem wsl -d Ubuntu-20.04 --cd ~ curl --ssl https://raw.githubusercontent.com/cpbuildtools/devcontainer-ngdotnet/release/latest/install/initialize_wsl.sh -o initialize.sh
+rem wsl -d Ubuntu-20.04 --cd ~ chmod +x initialize.sh
+rem wsl -d Ubuntu-20.04 --cd ~ ./initialize.sh --appdata="%appdata%" 
