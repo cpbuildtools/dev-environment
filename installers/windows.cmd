@@ -12,6 +12,7 @@ echo.
 echo ************************************************************
 echo [0m
 
+
 echo [96mDetecting Windows version...[0m
 for /f "tokens=4-7 delims=. " %%i in ('ver') do (
     set fullVersion=%%i.%%j.%%k.%%l
