@@ -28,24 +28,24 @@ exit 1
 
 :install_10
 echo [96mDownloading  Windows [93m100[96m Installer...[0m
-del /f/s/q %tmpPath% > nul 2>&1
-rmdir /s/q %tmpPath%
-mkdir %tmpPath% > nul 2>&1
-curl --ssl --silent %repo%/installers/win/install.cmd > %tmpPath%\install.cmd
-curl --ssl --silent %repo%/installers/win_10/install.cmd > %tmpPath%\install_10.cmd
-cd %tmpPath%
+del /f/s/q "%tmpPath%" > nul 2>&1
+rmdir /s/q "%tmpPath%"
+mkdir "%tmpPath%" > nul 2>&1
+curl --ssl --silent %repo%/installers/win/install.cmd > "%tmpPath%\install.cmd"
+curl --ssl --silent %repo%/installers/win_10/install.cmd > "%tmpPath%\install_10.cmd"
+cd "%tmpPath%"
 echo [92mStarting Windows [93m10[92m Installer.[0m
 install_10.cmd
 goto end
 
 :install_11
 echo [96mDownloading  Windows [93m11[96m Installer...[0m
-del /f/s/q %tmpPath% > nul 2>&1
-rmdir /s/q %tmpPath%
-mkdir %tmpPath% > nul 2>&1
-curl --ssl --silent %repo%/installers/win/install.cmd > %tmpPath%\install.cmd
-curl --ssl --silent %repo%/installers/win_11/install.cmd > %tmpPath%\install_11.cmd
-cd %tmpPath%
+del /f/s/q "%tmpPath%" > nul 2>&1
+rmdir /s/q "%tmpPath%"
+mkdir "%tmpPath%" > nul 2>&1
+curl --ssl --silent %repo%/installers/win/install.cmd > "%tmpPath%\install.cmd"
+curl --ssl --silent %repo%/installers/win_11/install.cmd > "%tmpPath%\install_11.cmd"
+cd "%tmpPath%"
 echo [92mStarting Windows [93m11[92m Installer.[0m
 install_11.cmd
 goto end
