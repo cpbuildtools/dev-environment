@@ -1,7 +1,7 @@
 rem set rng=%random% && curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/windows.cmd > "%temp%\devenv_intaller_%rng%.cmd" && "%temp%\devenv_intaller_%rng%.cmd"
 @echo off
 setlocal
-set tmpPath=%temp%\dev-environment
+set tmpPath=%temp%\dev-environment-%rng%
 set repo=https://raw.githubusercontent.com/cpbuildtools/dev-environment/main
 
 echo [95m 
