@@ -31,10 +31,10 @@ echo repo: %repo%
 
 echo [96mDownloading Ubuntu [93m20.04[96m Installer...[0m
 
-wsl -d Ubuntu-20.04 --cd ~ "curl --ssl --silent %repo%/installers/wsl/install.sh > '/tmp/dev-env-installer-%rng%.sh'"
+wsl -d Ubuntu-20.04 --cd ~ "curl --ssl --silent %repo%/installers/wsl/install.sh > '/tmp/dev-env-installer.sh'"
 wsl -d Ubuntu-20.04 --cd ~ "ls -al /tmp"
-echo "chmod +x /tmp/dev-env-installer-%rng%.sh"
-wsl -d Ubuntu-20.04 --cd ~ "chmod +x '/tmp/dev-env-installer-%rng%.sh'"
+echo "chmod +x /tmp/dev-env-installer.sh"
+wsl -d Ubuntu-20.04 --cd ~ "chmod +x '/tmp/dev-env-installer.sh'"
 rem wsl -d Ubuntu-20.04 --cd ~ cd /tmp && ./dev-env-installer-%rng%.sh --appdata="%appdata%"
 
 
