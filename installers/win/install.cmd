@@ -29,6 +29,14 @@ wsl -t Ubuntu-20.04
 
 echo repo: %repo%
 
+echo [96mDownloading Ubuntu [93m20.04[96m Installer...[0m
+
+wsl -d Ubuntu-20.04 --cd ~ curl --ssl --silent %repo%/installers/wsl/install.sh > /tmp/dev-env-installer-%rng%.sh
+wsl -d Ubuntu-20.04 --cd ~ chmod +x /tmp/dev-env-installer-%rng%.sh
+rem wsl -d Ubuntu-20.04 --cd ~ cd /tmp && ./dev-env-installer-%rng%.sh --appdata="%appdata%"
+
+
+
 rem wsl -d Ubuntu-20.04 --cd ~ curl --ssl https://raw.githubusercontent.com/cpbuildtools/devcontainer-ngdotnet/release/latest/install/install_wsl.sh -o install.sh
 rem wsl -d Ubuntu-20.04 --cd ~ chmod +x install.sh
 rem wsl -d Ubuntu-20.04 --cd ~ ./install.sh --appdata="%appdata%"
