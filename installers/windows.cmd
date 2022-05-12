@@ -1,4 +1,4 @@
-rem curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/windows.cmd > %temp%\devenv_intaller.cmd && %temp%\devenv_intaller.cmd
+rem set rng=%random% && curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/windows.cmd > %temp%\devenv-%rng%\devenv_intaller.cmd && %temp%\devenv-%rng%\devenv_intaller.cmd
 @echo off
 setlocal
 set tmpPath=%temp%\dev-environment
