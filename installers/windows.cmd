@@ -17,6 +17,9 @@ if "%version%" == "10" goto install_10
 if "%version%" == "11" goto intall_11
 
 echo Unsupported Windows Version %version%
+
+rem tmp
+goto end
 exit 1
 
 :install_10
