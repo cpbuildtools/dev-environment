@@ -2,7 +2,10 @@
 rem curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/windows.cmd > %temp%\devenv_intaller.cmd && %temp%\devenv_intaller.cmd
 setlocal
 set tmpPath=%temp%\dev-environment
+
+ver
 echo TempPath: %tmpPath%
+
 for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i
 if "%version%" == "10" goto install_10
 if "%version%" == "11" goto intall_11
