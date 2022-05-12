@@ -11,7 +11,7 @@ rem Get the file name of the ubuntu executable
 for /f "delims=" %%a in ('dir /b %userprofile%\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu20.04onWindows*') do set "ubuntuFile=%%a"
 start %userprofile%\AppData\Local\Microsoft\WindowsApps\%ubuntuFile%\ubuntu2004.exe
 
-echo [93m 
+echo [33m 
 echo ************************************************************
 echo.
 echo Complete the ubuntu setup in the ubuntu terminal. 
@@ -20,9 +20,11 @@ echo.
 echo ************************************************************
 echo [0m
 
-echo [33m 
+echo [93m 
 pause
 echo [0m
+
+taskkill /IM "ubuntu2004.exe" /F
 
 wsl -t Ubuntu-20.04
 
