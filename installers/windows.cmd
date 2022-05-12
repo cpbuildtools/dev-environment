@@ -13,8 +13,8 @@ echo VERSION: %VERSION%
 echo VERSION2: %SUB_VERSION%
 
 
-if "%version%" == "10" goto install_10
-if "%version%" == "11" goto intall_11
+if "%VERSION%" == "10" if "%SUB_VERSION%" != "22000" goto install_10
+if "%VERSION%" == "10" if "%SUB_VERSION%" == "22000" goto intall_11
 
 echo Unsupported Windows Version %version%
 
