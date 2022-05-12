@@ -13,8 +13,8 @@ echo VERSION: "%VERSION%"
 echo VERSION2: "%SUB_VERSION%"
 
 
-if "%VERSION%" == "10" if "%SUB_VERSION%" != "22000" goto install_10
-if "%VERSION%" == "10" if "%SUB_VERSION%" == "22000" goto intall_11
+if "%VERSION%" == "10" if not "%SUB_VERSION%" == "22000" goto install_10
+if "%VERSION%" == "10" if "%SUB_VERSION%" == "22000" goto install_11
 
 echo Unsupported Windows Version %version%
 
@@ -26,14 +26,16 @@ exit 1
 mkdir %tmpPath%
 curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/win/install.cmd > %tmpPath%\install.cmd
 curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/win_10/install.cmd > %tmpPath%\install_10.cmd
-%tmpPath%\install_10.cmd
+cd %tmpPath%
+install_10.cmd
 goto end
 
 :install_11
 mkdir %tmpPath%
 curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/win/install.cmd > %tmpPath%\install.cmd
 curl --ssl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/win_11/install.cmd > %tmpPath%\install_11.cmd
-%tmpPath%\install_11.cmd
+cd %tmpPath%
+install_11.cmd
 goto end
 
 :end
