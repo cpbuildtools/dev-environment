@@ -8,7 +8,7 @@ echo TempPath: %tmpPath%
 
 for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i
 for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION2=%%j
-for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION3=%%k
+for /f "tokens=4-6 delims=. " %%i in ('ver') do set VERSION3=%%k
 
 echo VERSION: %version%
 echo VERSION2: %version2%
