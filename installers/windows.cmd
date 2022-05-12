@@ -6,12 +6,13 @@ set tmpPath=%temp%\dev-environment
 ver
 echo TempPath: %tmpPath%
 
-for /f "tokens=4-6 delims=. " %%i in ('ver') do set VERSION=%%i.%%j.%%k
+for /f "tokens=4-6 delims=. " %%i in ('ver') do set VERSION=%%i
+for /f "tokens=4-6 delims=. " %%i in ('ver') do set SUB_VERSION=%%k
 
 
-echo VERSION: %version%
-echo VERSION2: %version2%
-echo VERSION3: %version3%
+echo VERSION: %VERSION%
+echo VERSION2: %SUB_VERSION%
+
 
 if "%version%" == "10" goto install_10
 if "%version%" == "11" goto intall_11
