@@ -15,15 +15,17 @@ echo [0m
 
 echo [96mDetecting Windows version...[0m
 
-for /f "tokens=4-7 delims=. " %%i in ('ver') do set FULL_VERSION=%%i.%%j.%%k.%%l
-for /f "tokens=4-6 delims=. " %%i in ('ver') do set VERSION=%%i
-for /f "tokens=4-6 delims=. " %%i in ('ver') do set SUB_VERSION=%%k
+for /f "tokens=4-7 delims=. " %%i in ('ver') do (
+    set fullVersion=%%i.%%j.%%k.%%l
+    set mainVersion=%%i
+    set subVersion=%%k
+)
 
 
-if "%VERSION%" == "10" if not "%SUB_VERSION%" == "22000" goto install_10
-if "%VERSION%" == "10" if "%SUB_VERSION%" == "22000" goto install_11
+if "%mainVersion%" == "10" if not "%subVersion%" == "22000" goto install_10
+if "%mainVersion%" == "10" if "%subVersion%" == "22000" goto install_11
 
-echo [91mUnsupported Windows Version %FULL_VERSION%[0m
+echo [91mUnsupported Windows Version %fullVersion%[0m
 
 rem tmp
 goto end
