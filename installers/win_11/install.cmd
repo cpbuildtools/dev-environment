@@ -5,7 +5,7 @@ wsl --update
 wsl --shutdown
 @echo off
 
-wsl --set-default-version 2
+wsl --set-default-version 2 > nul 2>&1
 install.cmd 
 goto end
 
