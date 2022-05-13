@@ -3,6 +3,7 @@
 ################################
 # Install Node JS              #
 ################################
+echo Installing Node JS
 curl --silent --ssl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
@@ -15,6 +16,7 @@ nvm use 16
 ################################
 # Install PNPM                 #
 ################################
+echo Installing PNPM
 npm i -g pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
@@ -27,6 +29,7 @@ pnpm i -g typescript @types/node ts-node
 ################################
 # Clone Installer from Github  #
 ################################
+echo Installing WSL Installer
 rm -rf .tmp
 git clone --branch release/latest https://github.com/cpbuildtools/devcontainer-ngdotnet.git .tmp
 cd .tmp/install/installer
@@ -35,4 +38,5 @@ pnpm i
 ################################
 # Run Installer Script         #
 ################################
+echo Run WSL Installer
 #ts-node index.ts install $@

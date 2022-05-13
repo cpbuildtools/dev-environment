@@ -29,21 +29,6 @@ wsl -t Ubuntu-20.04
 
 echo [96mDownloading Ubuntu [93m20.04[96m Installer...[0m
 
-wsl -d Ubuntu-20.04 rm -rf ~/.tmp
-wsl -d Ubuntu-20.04 mkdir ~/.tmp
-
-wsl -d Ubuntu-20.04 curl --ssl %repo%/installers/wsl/install.sh -o ~/.tmp/dev-env-installer.sh
-wsl -d Ubuntu-20.04 chmod +x ~/.tmp/dev-env-installer.sh
-wsl -d Ubuntu-20.04 cd ~/.tmp && ./dev-env-installer.sh --appdata="%appdata%"
-
-
-
-rem wsl -d Ubuntu-20.04 --cd ~ curl --ssl https://raw.githubusercontent.com/cpbuildtools/devcontainer-ngdotnet/release/latest/install/install_wsl.sh -o install.sh
-rem wsl -d Ubuntu-20.04 --cd ~ chmod +x install.sh
-rem wsl -d Ubuntu-20.04 --cd ~ ./install.sh --appdata="%appdata%"
-
-rem wsl -t Ubuntu-20.04
-
-rem wsl -d Ubuntu-20.04 --cd ~ curl --ssl https://raw.githubusercontent.com/cpbuildtools/devcontainer-ngdotnet/release/latest/install/initialize_wsl.sh -o initialize.sh
-rem wsl -d Ubuntu-20.04 --cd ~ chmod +x initialize.sh
-rem wsl -d Ubuntu-20.04 --cd ~ ./initialize.sh --appdata="%appdata%" 
+wsl -d Ubuntu-20.04 --cd ~ curl --ssl %repo%/installers/wsl/install.sh -o ~/dev-env-installer.sh
+wsl -d Ubuntu-20.04 --cd ~ chmod +x ~/dev-env-installer.sh
+wsl -d Ubuntu-20.04 --cd ~ ./dev-env-installer.sh --appdata="%appdata%"
