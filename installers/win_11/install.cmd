@@ -2,9 +2,8 @@
 wsl --status > nul 2>&1 || goto enableWSL
 wsl --update
 
-@echo on
+echo wsl --shutdown
 wsl --shutdown
-@echo off
 
 wsl --set-default-version 2 > nul 2>&1
 
