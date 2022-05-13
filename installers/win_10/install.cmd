@@ -1,9 +1,3 @@
-@echo off
-
-echo Windows 10 Installer
-
-install.cmd 
-
 
 @echo off 
 wsl -l -q 2> nul || goto :enableWSL
