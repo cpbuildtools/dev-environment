@@ -5,7 +5,7 @@ setlocal
     set "repo=https://raw.githubusercontent.com/cpbuildtools/dev-environment/main"
     set "rng=%random%%random%%random%"
     set "tmpPath=%temp%\dev-environment-%rng%"
-    mkdir -p %tmpPath%
+    mkdir %tmpPath% > nul 2>&1
 
     curl --silent %repo%/installers/windows.cmd > %tmpPath%\windows.cmd && %tmpPath%\windows.cmd
 endlocal
