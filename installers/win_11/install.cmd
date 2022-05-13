@@ -1,7 +1,10 @@
 @echo off
 wsl --status > nul 2>&1 || goto enableWSL
 wsl --update
+@echo on
 wsl --shutdown
+@echo off
+
 wsl --set-default-version 2
 install.cmd 
 goto end
