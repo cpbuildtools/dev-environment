@@ -33,7 +33,7 @@ wsl -d Ubuntu-20.04 rm -rf ~/.tmp
 wsl -d Ubuntu-20.04 mkdir ~/.tmp
 
 wsl -d Ubuntu-20.04 curl --ssl %repo%/installers/wsl/install.sh -o ~/.tmp/dev-env-installer.sh
-wsl -d Ubuntu-20.04 chmod +x ~/.tmp/dev-env-installer.shh
+wsl -d Ubuntu-20.04 chmod +x ~/.tmp/dev-env-installer.sh
 wsl -d Ubuntu-20.04 cd ~/.tmp && ./dev-env-installer.sh --appdata="%appdata%"
 
 
