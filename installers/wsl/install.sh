@@ -35,8 +35,7 @@ rm -rf ./.tmp
 git clone --branch main https://github.com/cpbuildtools/dev-environment.git ./.tmp
 
 rm -rf ./devenv-cli
-ls -al ./.tmp
-mkdir -d ./devenv-cli
+mkdir -p ./devenv-cli
 cp -r ./.tmp/cli/* ./devenv-cli
 
 cd ./devenv-cli
