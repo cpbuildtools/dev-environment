@@ -1,7 +1,6 @@
 #!/bin/bash
 
-export PNPM_HOME="$HOME/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+source ~/.bashrc
 
 cd ~/devenv-cli
 pnpm link --global
