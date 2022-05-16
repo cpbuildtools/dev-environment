@@ -60,7 +60,6 @@ export const handler = async (argv: Arguments) => {
         await installCoreApps(argv.updateOnly as boolean);
         if (!argv.skipOptional) {
             await installApps('!Core', argv.updateOnly as boolean);
-            console.log('apps installed');
         }
         const rebootCmd = `devenv install --resume 1 --appdata "${argv.appdata}"`;
         await rebootWindows(`wsl bash -ic "${escapeString(rebootCmd)}"`);
@@ -95,7 +94,6 @@ async function installCoreApps(updateOnly: boolean) {
 }
 
 async function setupDockerDesktop(windowsAppDataPath: string) {
-    console.log('setupDockerDesktop:', windowsAppDataPath);
     try {
         const cmd = `"${await getDockerDesktopPath()}/Docker Desktop.exe" &`;
         await exec(cmd);

@@ -47,7 +47,6 @@ async function setEnvVar(name: string, value: string) {
         lines.push(exportStr);
     }
     process.env[name] = value;
-    console.log(lines.join('\n'));
     await writeFile(path, lines.join('\n'), 'utf-8');
 }
 
