@@ -24,6 +24,7 @@ export PATH="$PNPM_HOME:$PATH"
 ################################
 # Install Node JS Global Utils #
 ################################
+pnpm setup
 pnpm i -g typescript @types/node ts-node
 
 ################################
@@ -45,3 +46,5 @@ pnpm link --global
 ################################
 # Run Installer Script         #
 ################################
+
+devenv
