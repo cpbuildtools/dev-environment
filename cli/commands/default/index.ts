@@ -1,4 +1,5 @@
 
+import inquirer from 'inquirer';
 import { homedir } from 'os';
 import { Argv } from 'yargs';
 
@@ -15,8 +16,13 @@ export const builder = (yargs: Argv) => {
     return yargs
 };
 
-export const handler = (args: any) => {
+export const handler = async (args: any) => {
     console.log('How may i help?');
+    await inquirer.prompt({
+        type: 'confirm',
+        message: "mmmm good?",
+        default: true
+    });
 };
 
 // End Command
