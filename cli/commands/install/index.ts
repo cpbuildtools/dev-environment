@@ -1,26 +1,25 @@
 
 import chalk from 'chalk';
 import { existsSync } from 'fs';
+import { mkdir } from 'fs/promises';
+import { homedir } from 'os';
+import { join, resolve } from 'path';
 import { Arguments, Argv } from 'yargs';
 import { installApplications, updateApplications } from '../../util/applications';
 import { exec } from '../../util/cmd';
-import { dockerLogin, getDockerConfigPath, getDockerDesktopPath, restartDocker, waitForDockerInit } from '../../util/docker';
+import { dockerLogin, getDockerConfigPath, getDockerDesktopPath, restartDocker } from '../../util/docker';
 import { getEnv } from '../../util/env';
 import { readJsonFile, writeJsonFile } from '../../util/json';
 import { rebootWindows } from '../../util/reboot';
 import { sleep } from '../../util/sleep';
 import { escapeString } from '../../util/strings';
-import { promptConfig } from '../configure';
+import { config, promptConfig } from '../configure';
 
 
 export const command = 'install';
 export const describe = 'install the dev environment';
 export const builder = (yargs: Argv) => {
     return yargs
-        .command('config', 'Runs the install configuration script',
-            builder => builder,
-            args =>
-                installConfig(args.setConfig as string[]))
         .command('install-apps [category]', 'Installs Applications to the dev env',
             builder => builder
                 .positional('category', {
@@ -33,12 +32,6 @@ export const builder = (yargs: Argv) => {
                     alias: 'u'
                 }),
             args => installApps(args.category, args.updateOnly))
-        .command('setup-docker', 'Installs Applications to the dev env',
-            builder => builder
-                .option('appdata', {
-                    type: 'string'
-                }).demandOption('appdata'),
-            args => setupDockerDesktop(args.appdata))
         .option('set-config', {
             type: 'string'
         })
@@ -62,19 +55,19 @@ export const builder = (yargs: Argv) => {
 };
 
 export const handler = async (argv: Arguments) => {
-    if(!argv.resume){
+    if (!argv.resume) {
         await installConfig(argv.setConfig as string[]);
         await installCoreApps(argv.updateOnly as boolean);
-        const rebootCmd = `devenv install --resume 1 --appdata "${argv.appdata}" --update-only ${argv.updateOnly ? 'true' : 'false'}  --skip-optional ${argv.skipOptional ? 'true' : 'false'}`;
-        await rebootWindows(`wsl bash -ic "${escapeString(rebootCmd)}"`);
-    }
-    if(argv.resume === 1){
-
         if (!argv.skipOptional) {
             await installApps('!Core', argv.updateOnly as boolean);
             console.log('apps installed');
         }
+        const rebootCmd = `devenv install --resume 1 --appdata "${argv.appdata}"`;
+        await rebootWindows(`wsl bash -ic "${escapeString(rebootCmd)}"`);
+    } else if (argv.resume === 1) {
         await setupDockerDesktop(argv.appdata as string);
+        await initializeDevContainers();
+        await initialized();
     }
 };
 
@@ -131,5 +124,27 @@ async function setupDockerDesktop(windowsAppDataPath: string) {
         console.error(e);
         throw e;
     }
+}
 
+async function initializeDevContainers() {
+    const cfg = await config();
+
+    let containerRoot = cfg.container_root ?? '~/development';
+    if (containerRoot.startsWith('~/')) {
+        containerRoot = join(homedir(), containerRoot.substring(2));
+    }
+    containerRoot = resolve(containerRoot);
+
+    if (!existsSync(containerRoot)) {
+        await mkdir(containerRoot, { recursive: true });
+    }
+}
+
+async function initialized() {
+    console.info();
+    console.info(chalk.green('********************************************************************'));
+    console.info(chalk.green('* Dev Environment Installed!!!                                     *'));
+    console.info(chalk.green('********************************************************************'));
+    console.info();
+    await exec(`devenv`);
 }
