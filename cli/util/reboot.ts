@@ -2,12 +2,13 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import { exit } from "process";
 import { exec } from './cmd'
+import { escapeString } from "./strings";
 
 
 export async function rebootWindows(resumeCommand?: string): Promise<never> {
     
-    console.log(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenvInstaller /d "${resumeCommand}" /f`)
-    await exec(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenvInstaller /d "${resumeCommand}" /f`);
+    console.log(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenvInstaller /d "${escapeString(resumeCommand)}" /f`)
+    await exec(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenvInstaller /d "${escapeString(resumeCommand)}" /f`);
     console.info();
     console.info(chalk.yellow('********************************************************************'))
     console.info(chalk.yellow('* Windows need to be restarted... because windows...               *'))
