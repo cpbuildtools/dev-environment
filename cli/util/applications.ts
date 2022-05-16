@@ -36,14 +36,14 @@ const baseApplications: IApplication[] = [
         category: "Core",
         source: 'winget'
     },
-    {
+    /*{
         id: 'GitHub.cli',
         name: 'GitHub CLI',
         description: 'GitHubs official command-line tool.',
         required: true,
         category: "Core",
         source: 'winget'
-    },
+    },*/
     {
         id: 'Microsoft.WindowsTerminal',
         name: 'Windows Terminal',

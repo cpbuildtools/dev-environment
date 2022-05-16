@@ -52,7 +52,7 @@ async function updateCli() {
     var tmpPath = join(homePath, '.tmp');
     var installPath = join(homePath, 'devenv-cli');
     await rm(tmpPath, { recursive: true, force: true });
-    await exec(`gh.exe repo clone cpbuildtools/dev-environment ${tmpPath}`);
+    await exec(`gh repo clone cpbuildtools/dev-environment ${tmpPath}`);
     await rm(installPath, { recursive: true, force: true });
     await mkdir(installPath, { recursive: true });
     await cp(join(tmpPath, 'cli'), installPath, { recursive: true, force: true });
