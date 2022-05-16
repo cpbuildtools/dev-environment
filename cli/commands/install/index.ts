@@ -37,6 +37,7 @@ export const builder = (yargs: Argv) => {
 };
 
 export const handler = async (argv: Arguments) => {
+    console.log('HANDLE IT!')
     await installConfig(argv.setConfig as string[]);
     await installCoreApps(argv.updateOnly as boolean);
 };
