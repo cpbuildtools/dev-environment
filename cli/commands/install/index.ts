@@ -65,7 +65,7 @@ export const handler = async (argv: Arguments) => {
     if(!argv.resume){
         await installConfig(argv.setConfig as string[]);
         await installCoreApps(argv.updateOnly as boolean);
-        const rebootCmd = `devenv install --resume 1 --appdata "${escapeString(argv.appdata as string)}" --update-only ${argv.updateOnly ? 'true' : 'false'}  --skip-optional ${argv.skipOptional ? 'true' : 'false'}`;
+        const rebootCmd = `devenv install --resume 1 --appdata "${argv.appdata}" --update-only ${argv.updateOnly ? 'true' : 'false'}  --skip-optional ${argv.skipOptional ? 'true' : 'false'}`;
         await rebootWindows(`wsl bash -ic "${escapeString(rebootCmd)}"`);
     }
     if(argv.resume === 1){
