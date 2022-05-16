@@ -11,7 +11,7 @@ import { readJsonFile, writeJsonFile } from '../../util/json';
 import {homedir} from 'os';
 
 const homePath = homedir();
-const configPath = join(homePath, 'devenv-cli/config/config.json');
+const configPath = join(homePath, 'devenv-cli.config.json');
 const configDefaultPath = join(__dirname, './config.default.json');
 
 export type PropertyChangeHandler = (action: string, value: string | undefined, name: string, config: any) => any | Promise<any>;
