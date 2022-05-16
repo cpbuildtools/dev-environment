@@ -61,8 +61,9 @@ export const handler = async (argv: Arguments) => {
         if (!argv.skipOptional) {
             await installApps('!Core', argv.updateOnly as boolean);
         }
-        const rebootCmd = `devenv install --resume 1 --appdata "${argv.appdata}"`;
-        await rebootWindows(`"wsl bash -ic \\"${escapeString(rebootCmd)}\\"" && pause`);
+        const rebootCmd = escapeString(`devenv install --resume 1 --appdata "${argv.appdata}"`);
+        const wslCommand = escapeString(`wsl bash -ic "${rebootCmd}"`);
+        await rebootWindows(`"${wslCommand}" && pause`);
     } else if (argv.resume === 1) {
         await setupDockerDesktop(argv.appdata as string);
         await initializeDevContainers();
