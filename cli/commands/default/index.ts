@@ -20,6 +20,7 @@ export const handler = async (args: any) => {
     console.log('How may i help?');
     await inquirer.prompt({
         type: 'confirm',
+        name: 'k',
         message: "mmmm good?",
         default: true
     });
