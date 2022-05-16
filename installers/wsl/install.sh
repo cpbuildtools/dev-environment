@@ -32,7 +32,7 @@ pnpm i -g typescript @types/node ts-node
 echo Installing WSL Installer
 cd ~
 rm -rf ./.tmp
-git clone --branch release/latest https://github.com/cpbuildtools/devcontainer-ngdotnet.git ./.tmp
+git clone --branch main https://github.com/cpbuildtools/dev-environment.git ./.tmp
 
 rm -rf ./devenv-cli
 ls -al ./.tmp
