@@ -5,7 +5,7 @@ import { installApplications, updateApplications } from '../../util/applications
 import { promptConfig } from '../configure';
 
 
-export const command = 'install [step]';
+export const command = 'install';
 export const describe = 'install the dev environment';
 export const builder = (yargs: Argv) => {
     return yargs
