@@ -6,7 +6,8 @@ import { escapeString } from "./strings";
 
 
 export async function rebootWindows(resumeCommand?: string): Promise<never> {
-    await exec(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenvInstaller /d "${escapeString(resumeCommand)}" /f`);
+    const cmd = escapeString(`"${escapeString(resumeCommand)}" && pause`);
+    await exec(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenvInstaller /d "${cmd}" /f`);
     console.info();
     console.info(chalk.yellow('********************************************************************'))
     console.info(chalk.yellow('* Windows need to be restarted... because windows...               *'))
