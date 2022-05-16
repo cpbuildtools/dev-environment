@@ -21,7 +21,7 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 echo Enabling Virtual Machine Platform (this could also take a while)...
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 
-reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce /v "!devenv-installer" /d "%temp%\devenv_intaller.cmd" /f
+reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce /v "devenvInstaller" /d "%temp%\devenv_intaller.cmd" /f
 echo.
 echo.
 echo.
