@@ -1,7 +1,13 @@
 
 import chalk from 'chalk';
+import { existsSync } from 'fs';
 import { Arguments, Argv } from 'yargs';
 import { installApplications, updateApplications } from '../../util/applications';
+import { exec } from '../../util/cmd';
+import { dockerLogin, getDockerConfigPath, getDockerDesktopPath, restartDocker, waitForDockerInit } from '../../util/docker';
+import { getEnv } from '../../util/env';
+import { readJsonFile, writeJsonFile } from '../../util/json';
+import { sleep } from '../../util/sleep';
 import { promptConfig } from '../configure';
 
 
@@ -82,6 +88,33 @@ async function installCoreApps(updateOnly: boolean) {
 }
 
 async function setupDockerDesktop(windowsAppDataPath: string) {
+    try {
+        const cmd = `"${await getDockerDesktopPath()}/Docker Desktop.exe" &`;
+        await exec(cmd);
+        const dockerConfigPath = await getDockerConfigPath(windowsAppDataPath);
+        while (!existsSync(dockerConfigPath)) {
+            await sleep(500);
+        }
 
+        // Enable WSL Docker Integration
+        const dockerConfig = await readJsonFile(dockerConfigPath);
+        const integratedWslDistros = (dockerConfig.integratedWslDistros ?? []) as string[];
+        if (integratedWslDistros.indexOf('Ubuntu-20.04') === -1) {
+            integratedWslDistros.push('Ubuntu-20.04');
+        }
+        dockerConfig.integratedWslDistros = integratedWslDistros;
+        await writeJsonFile(dockerConfigPath, dockerConfig);
+
+        await restartDocker(windowsAppDataPath);
+
+        const user = getEnv('GITHUB_USER')!;
+        const token = getEnv('GITHUB_TOKEN')!;
+        await dockerLogin('ghcr.io', user, token);
+        await dockerLogin('docker.pkg.github.com', user, token);
+
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
 
 }
