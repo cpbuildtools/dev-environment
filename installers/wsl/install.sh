@@ -40,11 +40,5 @@ mkdir -p ./devenv-cli
 cp -r ./.tmp/cli/* ./devenv-cli
 
 cd ./devenv-cli
+chmod +x ./intall.sh
 pnpm i
-pnpm link --global
-
-################################
-# Run Installer Script         #
-################################
-
-devenv
