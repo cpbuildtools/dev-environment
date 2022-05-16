@@ -1,7 +1,7 @@
 import chalk from 'chalk';
-import { exec, run } from './cmd.js';
-import { sleep } from './sleep.js';
-import { translateWindowsPath } from './wsl.js';
+import { exec, run } from './cmd';
+import { sleep } from './sleep';
+import { translateWindowsPath } from './wsl';
 import { join } from 'path';
 import { existsSync } from 'fs'
 
