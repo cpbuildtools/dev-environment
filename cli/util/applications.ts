@@ -52,7 +52,7 @@ export async function getApplicationsToInstall(): Promise<IApplication[]> {
 }
 
 export async function installApplications(category: string = '*') {
-    const apps = Enumerable.from(await getApplicationsToInstall()).where(a => category === a.category || category === '*');
+    const apps = Enumerable.from(await getApplicationsToInstall()).where(matchCatSearch(category));
     for (const install of apps.toArray()) {
         switch (install.source) {
             case 'winget':
@@ -64,8 +64,24 @@ export async function installApplications(category: string = '*') {
     }
 }
 
+function matchCatSearch(matches: string) {
+    return (app: IApplication) => {
+        if (app.category === matches || matches === '*') {
+            return true;
+        }
+        if (matches.startsWith('!')) {
+            matches = matches.substring(1);
+            if (app.category !== matches) {
+                return true;
+            }
+        }
+        return false;
+    };
+}
+
 export async function updateApplications(category: string = '*') {
-    const apps = Enumerable.from(await getApplicationsToInstall()).where(a => category === a.category || category === '*');
+    const apps = Enumerable.from(await getApplicationsToInstall())
+        .where(matchCatSearch(category));
     for (const install of apps.toArray()) {
         switch (install.source) {
             case 'winget':

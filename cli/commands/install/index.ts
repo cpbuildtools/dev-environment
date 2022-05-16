@@ -34,12 +34,18 @@ export const builder = (yargs: Argv) => {
             default: false,
             alias: 'u'
         })
+        .option('skip-optional', {
+            type: 'boolean',
+            default: false,
+        })
 };
 
 export const handler = async (argv: Arguments) => {
-    console.log('HANDLE IT!')
     await installConfig(argv.setConfig as string[]);
     await installCoreApps(argv.updateOnly as boolean);
+    if (!argv.skipOptional) {
+        await installApps('!Core', argv.updateOnly as boolean)
+    }
 };
 
 async function installConfig(setConfig: string[]) {
@@ -47,19 +53,20 @@ async function installConfig(setConfig: string[]) {
 }
 
 async function installApps(category: string, updateOnly: boolean) {
-    console.group(chalk.yellowBright(category));
     await (updateOnly ? updateApplications(category) : installApplications(category));
-    console.groupEnd();
 }
 
 async function installCoreApps(updateOnly: boolean) {
+
     console.info();
     console.info(chalk.yellowBright('********************************************************************'));
-    console.info(chalk.yellowBright('* Installing Core Applications                                    '));
+    if (updateOnly) {
+        console.info(chalk.yellowBright('* Updating Core Applications                                       *'));
+    } else {
+        console.info(chalk.yellowBright('* Installing Core Applications                                     *'));
+    }
     console.info(chalk.yellowBright('********************************************************************'));
     console.info();
 
-    console.group(chalk.yellowBright('Core'));
-    await (updateOnly ? updateApplications('Core') : installApplications('Core'));
-    console.groupEnd();
+    await installApps('Core', updateOnly);
 }
