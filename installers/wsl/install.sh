@@ -30,15 +30,16 @@ pnpm i -g typescript @types/node ts-node
 # Clone Installer from Github  #
 ################################
 echo Installing WSL Installer
-rm -rf .tmp
-git clone --branch release/latest https://github.com/cpbuildtools/devcontainer-ngdotnet.git .tmp
+cd ~
+rm -rf ./.tmp
+git clone --branch release/latest https://github.com/cpbuildtools/devcontainer-ngdotnet.git ./.tmp
 
-rm -rf ~/devenv-cli
-ls -al ~/.tmp
-mkdir -d ~/devenv-cli
-cp -r ~/.tmp/cli/* ~/devenv-cli
+rm -rf ./devenv-cli
+ls -al ./.tmp
+mkdir -d ./devenv-cli
+cp -r ./.tmp/cli/* ./devenv-cli
 
-cd ~/devenv-cli
+cd ./devenv-cli
 pnpm i
 pnpm link --global
 
