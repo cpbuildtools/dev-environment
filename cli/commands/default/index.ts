@@ -101,7 +101,7 @@ async function mainMenu() {
             type: 'list',
             name: 'action',
             message: '',
-            menu
+            choices: menu
         } as ListQuestion);
 
         switch (answer.action) {
@@ -144,7 +144,7 @@ async function mainMenu() {
             type: 'list',
             name: 'action',
             message: '',
-            menu
+            choices: menu
         } as ListQuestion);
 
         switch (answer.action) {
