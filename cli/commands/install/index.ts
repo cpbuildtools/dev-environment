@@ -25,6 +25,12 @@ export const builder = (yargs: Argv) => {
                     alias: 'u'
                 }),
             args => installApps(args.category, args.updateOnly))
+        .command('setup-docker', 'Installs Applications to the dev env',
+            builder => builder
+                .option('appdata', {
+                    type: 'string'
+                }).demandOption('appdata'),
+            args => setupDockerDesktop(args.appdata))
         .option('set-config', {
             type: 'string'
         })
@@ -38,6 +44,9 @@ export const builder = (yargs: Argv) => {
             type: 'boolean',
             default: false,
         })
+        .option('appdata', {
+            type: 'string'
+        }).demandOption('appdata')
 };
 
 export const handler = async (argv: Arguments) => {
@@ -46,6 +55,7 @@ export const handler = async (argv: Arguments) => {
     if (!argv.skipOptional) {
         await installApps('!Core', argv.updateOnly as boolean)
     }
+    await setupDockerDesktop(argv.appdata as string);
 };
 
 async function installConfig(setConfig: string[]) {
@@ -69,4 +79,9 @@ async function installCoreApps(updateOnly: boolean) {
     console.info();
 
     await installApps('Core', updateOnly);
+}
+
+async function setupDockerDesktop(windowsAppDataPath: string) {
+
+
 }

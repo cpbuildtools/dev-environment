@@ -32,6 +32,6 @@ echo [96mDownloading Ubuntu [93m20.04[96m Installer...[0m
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "rm -f ~/dev-env-installer.sh"
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "curl --ssl %repo%/installers/wsl/install.sh -o ~/dev-env-installer.sh"
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "chmod +x ~/dev-env-installer.sh"
-wsl -d Ubuntu-20.04 --cd ~ bash -ic "./dev-env-installer.sh --appdata=\"%appdata%\""
+wsl -d Ubuntu-20.04 --cd ~ bash -ic "./dev-env-installer.sh"
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "cd ~/devenv-cli && ./install.sh"
-wsl -d Ubuntu-20.04 --cd ~ bash -ic "devenv install"
+wsl -d Ubuntu-20.04 --cd ~ bash -ic "devenv install --appdata=\"%appdata%\""
