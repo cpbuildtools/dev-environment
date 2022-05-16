@@ -29,6 +29,7 @@ wsl -t Ubuntu-20.04
 
 echo [96mDownloading Ubuntu [93m20.04[96m Installer...[0m
 
+wsl -d Ubuntu-20.04 --cd ~ rm -f ~/dev-env-installer.sh
 wsl -d Ubuntu-20.04 --cd ~ curl --ssl %repo%/installers/wsl/install.sh -o ~/dev-env-installer.sh
 wsl -d Ubuntu-20.04 --cd ~ chmod +x ~/dev-env-installer.sh
 wsl -d Ubuntu-20.04 --cd ~ ./dev-env-installer.sh --appdata="%appdata%"
