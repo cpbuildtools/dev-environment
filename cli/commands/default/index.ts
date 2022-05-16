@@ -1,5 +1,6 @@
 
-import inquirer from 'inquirer';
+import chalk from 'chalk';
+import inquirer, { ListQuestion } from 'inquirer';
 import { homedir } from 'os';
 import { Argv } from 'yargs';
 
@@ -17,13 +18,61 @@ export const builder = (yargs: Argv) => {
 };
 
 export const handler = async (args: any) => {
-    console.log('How may i help?');
-    await inquirer.prompt({
-        type: 'confirm',
-        name: 'k',
-        message: "mmmm good?",
-        default: true
-    });
+    await mainMenu();
 };
 
 // End Command
+
+async function mainMenu() {
+    
+    console.info();
+    console.info(chalk.green('********************************************************************'));
+    console.info(chalk.green('* Dev container prerequisites installed and configured             *'));
+    console.info(chalk.green('********************************************************************'));
+    console.info();
+    
+    let answer = { action: null };
+
+    const menu = [
+        {
+            name: 'Launch a Dev Container',
+            value: 'launch'
+        },
+        {
+            name: 'Clone a dev container',
+            value: 'clone'
+        },
+        {
+            name: 'Create a dev container',
+            value: 'create'
+        },
+        {
+            name: 'Update Dev Environment',
+            value: 'update'
+        },
+        {
+            name: 'Config Dev Environment',
+            value: 'config'
+        },
+        {
+            name: 'Exit.',
+            value: 'exit'
+        }
+    ];
+
+    while(answer.action !== 'exit'){        
+        answer = await inquirer.prompt({
+            type: 'list',
+            name: 'action',
+            message: '',
+            menu
+        } as ListQuestion) as any;
+
+        switch(answer.action){
+            case "":
+                break;
+        }
+    }
+
+
+}
