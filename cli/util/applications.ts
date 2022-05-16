@@ -122,8 +122,8 @@ function matchCatSearch(matches: string) {
             return true;
         }
         if (matches.startsWith('!')) {
-            matches = matches.substring(1);
-            if (app.category !== matches) {
+            const m = matches.substring(1);
+            if (app.category !== m) {
                 return true;
             }
         }
