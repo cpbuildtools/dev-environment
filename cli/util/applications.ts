@@ -100,7 +100,10 @@ export async function getApplicationsToInstall(): Promise<IApplication[]> {
 }
 
 export async function installApplications(category: string = '*') {
+    console.log('installApplications', category);
+
     const apps = Enumerable.from(await getApplicationsToInstall()).where(matchCatSearch(category));
+    console.log(apps.toArray());
     for (const install of apps.toArray()) {
         switch (install.source) {
             case 'winget':
@@ -114,6 +117,7 @@ export async function installApplications(category: string = '*') {
 
 function matchCatSearch(matches: string) {
     return (app: IApplication) => {
+        console.log('cat', app.category, 'matches', matches)
         if (app.category === matches || matches === '*') {
             return true;
         }
