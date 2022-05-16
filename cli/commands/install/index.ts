@@ -7,6 +7,7 @@ import { exec } from '../../util/cmd';
 import { dockerLogin, getDockerConfigPath, getDockerDesktopPath, restartDocker, waitForDockerInit } from '../../util/docker';
 import { getEnv } from '../../util/env';
 import { readJsonFile, writeJsonFile } from '../../util/json';
+import { rebootWindows } from '../../util/reboot';
 import { sleep } from '../../util/sleep';
 import { promptConfig } from '../configure';
 
@@ -50,19 +51,30 @@ export const builder = (yargs: Argv) => {
             type: 'boolean',
             default: false,
         })
+        .option('resume', {
+            type: 'number',
+            default: 0,
+        })
         .option('appdata', {
             type: 'string'
         }).demandOption('appdata')
 };
 
 export const handler = async (argv: Arguments) => {
-    await installConfig(argv.setConfig as string[]);
-    await installCoreApps(argv.updateOnly as boolean);
-    if (!argv.skipOptional) {
-        await installApps('!Core', argv.updateOnly as boolean);
-        console.log('apps installed');
+    if(!argv.resume){
+        await installConfig(argv.setConfig as string[]);
+        await installCoreApps(argv.updateOnly as boolean);
+        const rebootCmd = `devenv install --resume 1`;
+        await rebootWindows(`wsl bash -ic \\"${rebootCmd}\\"`);
     }
-    await setupDockerDesktop(argv.appdata as string);
+    if(argv.resume === 1){
+
+        if (!argv.skipOptional) {
+            await installApps('!Core', argv.updateOnly as boolean);
+            console.log('apps installed');
+        }
+        await setupDockerDesktop(argv.appdata as string);
+    }
 };
 
 async function installConfig(setConfig: string[]) {
