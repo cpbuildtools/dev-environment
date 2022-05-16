@@ -59,7 +59,8 @@ export const handler = async (argv: Arguments) => {
     await installConfig(argv.setConfig as string[]);
     await installCoreApps(argv.updateOnly as boolean);
     if (!argv.skipOptional) {
-        await installApps('!Core', argv.updateOnly as boolean)
+        await installApps('!Core', argv.updateOnly as boolean);
+        console.log('apps installed');
     }
     await setupDockerDesktop(argv.appdata as string);
 };
@@ -88,6 +89,7 @@ async function installCoreApps(updateOnly: boolean) {
 }
 
 async function setupDockerDesktop(windowsAppDataPath: string) {
+    console.log('setupDockerDesktop:', windowsAppDataPath);
     try {
         const cmd = `"${await getDockerDesktopPath()}/Docker Desktop.exe" &`;
         await exec(cmd);
