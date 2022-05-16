@@ -6,7 +6,7 @@ interface IApplication {
     name: string;
     description?: string;
     required: boolean;
-    category: "Core";
+    category: string;
     source: 'winget' | 'apt';
 }
 
@@ -42,6 +42,54 @@ const baseApplications: IApplication[] = [
         description: 'GitHubs official command-line tool.',
         required: true,
         category: "Core",
+        source: 'winget'
+    },
+    {
+        id: 'Microsoft.WindowsTerminal',
+        name: 'Windows Terminal',
+        description: 'The new Windows Terminal, a tabbed command line experience for Windows.',
+        required: false,
+        category: "Utils",
+        source: 'winget'
+    },
+    {
+        id: 'Google.Chrome',
+        name: 'Google Chrome',
+        description: 'A fast, secure, and free web browser built for the modern web. Chrome syncs bookmarks across all your devices, fills out forms automatically, and so much more.',
+        required: false,
+        category: "Browsers",
+        source: 'winget'
+    },
+    {
+        id: 'Google.Chrome.Dev',
+        name: 'Google Chrome',
+        description: 'Google Chrome for developers',
+        required: false,
+        category: "Browsers",
+        source: 'winget'
+    },
+    {
+        id: 'Mozilla.Firefox',
+        name: 'Mozilla Firefox',
+        description: 'Mozilla Firefox is free and open source software, built by a community of thousands from all over the world.',
+        required: false,
+        category: "Browsers",
+        source: 'winget'
+    },
+    {
+        id: 'Mozilla.Firefox.DeveloperEdition',
+        name: 'Firefox Developer Edition',
+        description: 'Firefox Developer Edition is the blazing fast browser that offers cutting edge developer tools and latest features like CSS Grid support and framework debugging.',
+        required: false,
+        category: "Browsers",
+        source: 'winget'
+    },
+    {
+        id: 'dbeaver.dbeaver',
+        name: 'DBeaver Community Edition',
+        description: 'Windows database management application with support for most popular dbs',
+        required: false,
+        category: "Databases",
         source: 'winget'
     }
 ];
