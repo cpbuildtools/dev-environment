@@ -34,7 +34,7 @@ rm -rf .tmp
 git clone --branch release/latest https://github.com/cpbuildtools/devcontainer-ngdotnet.git .tmp
 
 rm -rf ~/devenv-cli
-cp -r .tmp/cli ~/devenv-cli
+cp -r ~/.tmp/cli ~/devenv-cli
 
 cd ~/devenv-cli
 pnpm i
