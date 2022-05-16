@@ -35,7 +35,8 @@ git clone --branch release/latest https://github.com/cpbuildtools/devcontainer-n
 
 rm -rf ~/devenv-cli
 ls -al ~/.tmp
-cp -r ~/.tmp/cli ~/devenv-cli
+mkdir -d ~/devenv-cli
+cp -r ~/.tmp/cli/* ~/devenv-cli
 
 cd ~/devenv-cli
 pnpm i
