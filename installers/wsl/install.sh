@@ -40,5 +40,5 @@ mkdir -p ./devenv-cli
 cp -r ./.tmp/cli/* ./devenv-cli
 
 cd ./devenv-cli
-chmod +x ./intall.sh
+chmod +x ./install.sh
 pnpm i

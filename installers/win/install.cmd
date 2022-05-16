@@ -34,4 +34,5 @@ wsl -d Ubuntu-20.04 --cd ~ curl --ssl %repo%/installers/wsl/install.sh -o ~/dev-
 wsl -d Ubuntu-20.04 --cd ~ chmod +x ~/dev-env-installer.sh
 wsl -d Ubuntu-20.04 --cd ~ ./dev-env-installer.sh --appdata="%appdata%"
 wsl -d Ubuntu-20.04 --cd ~ cd ./devenv-cli && ./install.sh
+wsl -d Ubuntu-20.04 --cd ~ sh -c "cd ~/devenv-cli && ./install.sh"
 wsl -d Ubuntu-20.04 --cd ~ devenv config
