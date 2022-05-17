@@ -1,22 +1,23 @@
 import { extname } from "path";
 
 import { spawn, exec } from 'child_process';
+import { translateWslPath } from "./wsl";
 
 export function launchVSCode(path: string = '.') {
     spawn(`code ${path}`, {shell: true, detached: true, stdio: 'inherit'});
 }
 
-export function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
+export async function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
     const isWS = extname(open) === '.code-workspace';
     const flag = isWS ? 'file-uri' : 'folder-uri';
-    const hexPath = Buffer.from(containerPath).toString('hex');
+
+    const hexPath = Buffer.from(await translateWslPath(containerPath)).toString('hex');
     let uri = `vscode-remote://dev-container+${hexPath}/${open ?? ''}`;
     //return exec(`code --${flag} "${uri}"`);
 
     spawn(`env && code --${flag} "${uri}"`, {shell: true, detached: false, stdio: 'inherit'}).on('exit', (code) => {
         console.log('code', code ?? 0);
     });
-
 }
 
 /*
