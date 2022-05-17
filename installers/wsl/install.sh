@@ -34,7 +34,7 @@ export PATH="$PNPM_HOME:$PATH"
 # Install Node JS Global Utils #
 ################################
 pnpm setup
-pnpm i -g typescript @types/node ts-node
+pnpm i -g typescript ts-node @vscode/dev-container-cli
 
 ################################
 # Clone Installer from Github  #
