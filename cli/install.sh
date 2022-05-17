@@ -3,4 +3,4 @@
 source ~/.bashrc
 cd ~/devenv-cli
 pnpm link --global
-echo Cli Installed
+echo Cli installed
