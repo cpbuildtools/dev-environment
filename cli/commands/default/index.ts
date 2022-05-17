@@ -37,23 +37,15 @@ async function mainMenu() {
 
     const menu = [
         {
-            name: 'Launch a Dev Container',
-            value: 'launch'
+            name: 'Dev Containers',
+            value: 'containers'
         },
         {
-            name: 'Clone a dev container',
-            value: 'clone'
-        },
-        {
-            name: 'Create a dev container',
-            value: 'create'
-        },
-        {
-            name: 'Update Dev Environment',
+            name: 'Update',
             value: 'update'
         },
         {
-            name: 'Config Dev Environment',
+            name: 'Config',
             value: 'config'
         },
         {
