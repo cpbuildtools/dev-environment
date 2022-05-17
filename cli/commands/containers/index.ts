@@ -1,16 +1,14 @@
 
-import { existsSync } from 'fs';
+import glob from 'fast-glob';
 import inquirer, { InputQuestion, ListChoiceOptions, ListQuestion } from 'inquirer';
 import { homedir } from 'os';
-import { dirname, join, resolve } from 'path';
+import { dirname, join, resolve, parse } from 'path';
 import { exit } from 'process';
-import simpleGit from 'simple-git';
 import { Argv } from 'yargs';
 import { exec } from '../../util/cmd';
+import { readJsonFile } from '../../util/json';
 import { config } from '../configure';
 
-import glob from 'fast-glob'
-import { readJsonFile } from '../../util/json';
 const homePath = homedir();
 
 
@@ -87,7 +85,21 @@ async function launchDevContainer() {
 
 }
 
+interface ContainerMenuItem {
+    configPath: string;
+    rootDir: string;
+    shortDir: string;
+    data: {
+        name: string;
+        [k: string]: unknown;
+    };
+}
 
+interface ContainerWorkspaceMenuItem {
+    container: ContainerMenuItem,
+    path: string;
+    absPath: string;
+}
 
 async function showContainerMenu() {
     const cfg = await config();
@@ -97,29 +109,63 @@ async function showContainerMenu() {
     }
     containerRoot = resolve(containerRoot);
 
-    const choices = await Promise.all( (await findDevContainerFiles())
-    .map(async (file) =>{
-        const path = join(containerRoot, file);
-        const root = dirname(dirname(file));
-        const data = await readJsonFile(path);
-        const name = data.name;
-        return {
-            type: 'choice',
-            name: `${name} [${root}]`,
-            short: name,
-            value: {
-                path,
-                file,
-                root,
-                data
-            }
-        } as ListChoiceOptions
-    }));
+    const choices = await Promise.all((await findDevContainerFiles())
+        .map(async (file) => {
+            const configPath = join(containerRoot, file);
+            const rootDir = dirname(dirname(configPath));
+            const shortDir = dirname(dirname(file));
+
+            const data = await readJsonFile(configPath);
+            const name = data.name;
+            return {
+                type: 'choice',
+                name: `${name} [${shortDir}]`,
+                short: name,
+                value: {
+                    configPath,
+                    rootDir,
+                    shortDir,
+                    data
+                } as ContainerMenuItem
+            } as ListChoiceOptions
+        }));
 
     const answers = await inquirer.prompt({
         type: 'list',
         name: 'container',
         message: 'Select a dev container',
+        choices
+    } as ListQuestion) as any;
+
+    await showContainerWorkspaceMenu(answers.container);
+}
+
+async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
+    const choices = (await findDevContainerWorkspaces(container.rootDir)).map(ws => {
+        const file = parse(ws);
+        return {
+            type: 'choice',
+            name: file.name,
+            value: {
+                container,
+                path: ws,
+                absPath: join(container.rootDir, ws)
+            } as ContainerWorkspaceMenuItem
+        } as ListChoiceOptions
+
+    });
+
+    choices.push({
+        type: 'choice',
+        name: "No Workspace (open dev container directly)",
+        short: "No Workspace",
+        value: null
+    });
+
+    const answers = await inquirer.prompt({
+        type: 'list',
+        name: 'workspace',
+        message: 'Select a workspace',
         choices
     } as ListQuestion) as any;
 
