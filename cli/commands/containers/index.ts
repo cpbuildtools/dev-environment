@@ -90,6 +90,7 @@ interface ContainerMenuItem {
     shortDir: string;
     config: {
         name: string;
+        workspaceFolder: string;
         [k: string]: unknown;
     };
 }
@@ -148,7 +149,7 @@ async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
             value: {
                 container,
                 path: ws,
-                absPath: join(container.rootDir, ws)
+                absPath: join(container.rootDir, 'workspaces', ws)
             } as ContainerWorkspaceMenuItem
         } as ListChoiceOptions
 
@@ -175,8 +176,11 @@ async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
 }
 
 async function launchDevContainer(selection:ContainerWorkspaceMenuItem) {
-    await launchVSCodeDevContainer(selection.container.rootDir, selection.path)
-
+    console.log(selection);
+    launchVSCodeDevContainer(
+        selection.container.rootDir, 
+        join(selection.container.config.workspaceFolder, selection.path ?? '')
+    );
 }
 
 
@@ -195,5 +199,5 @@ async function findDevContainerFolders() {
 }
 
 async function findDevContainerWorkspaces(containerFolder: string) {
-    return await glob('**/*.code-workspace', { cwd: containerFolder });
+    return await glob('**/*.code-workspace', { cwd: join(containerFolder, 'workspaces') });
 }
