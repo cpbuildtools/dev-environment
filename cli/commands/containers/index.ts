@@ -74,10 +74,14 @@ async function cloneDevContainer() {
     }
 
     const path = join(containerRoot, repo);
-    await run(`gh repo clone ${repo} ${path}`);
+    try{
+        await run(`gh repo clone ${repo} ${path}`);
+        await showClonedContainerOptions(repo);
+    }catch(e){
+        console.error(e);
+    }
 
 
-    await showClonedContainerOptions(repo);
 
 }
 
