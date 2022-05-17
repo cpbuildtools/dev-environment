@@ -195,11 +195,11 @@ async function mainMenu() {
 
         switch (answer.action) {
             case 'clone':
-                await cloneDevContainer() && exit(0);
+                await cloneDevContainer() || exit(0);
             case 'create':
-                await createDevContainer() && exit(0);
+                await createDevContainer() || exit(0);
             case 'launch':
-                await launchDevContainer() && exit(0);
+                await launchDevContainer() || exit(0);
         }
 
     }
