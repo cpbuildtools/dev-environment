@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import { existsSync } from 'fs';
 import { readdir } from 'fs/promises';
-import inquirer, { InputQuestion, ListQuestion } from 'inquirer';
+import inquirer, { InputQuestion, ListQuestion, ChoiceCollection } from 'inquirer';
 import { homedir } from 'os';
 import { join, resolve } from 'path';
 import { exit } from 'process';

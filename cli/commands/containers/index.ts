@@ -1,15 +1,16 @@
 
 import { existsSync } from 'fs';
-import inquirer, { InputQuestion } from 'inquirer';
+import inquirer, { InputQuestion, ListChoiceOptions, ListQuestion } from 'inquirer';
 import { homedir } from 'os';
-import { join, resolve } from 'path';
+import { dirname, join, resolve } from 'path';
 import { exit } from 'process';
 import simpleGit from 'simple-git';
 import { Argv } from 'yargs';
 import { exec } from '../../util/cmd';
 import { config } from '../configure';
 
-
+import glob from 'fast-glob'
+import { readJsonFile } from '../../util/json';
 const homePath = homedir();
 
 
@@ -31,7 +32,7 @@ export const builder = (yargs: Argv) => {
         )
         .command('open', 'open a dev container',
             builder => builder,
-            args => launchDevContainer()
+            args => showContainerMenu()
         )
         ;
 };
@@ -84,4 +85,58 @@ async function createDevContainer() {
 
 async function launchDevContainer() {
 
+}
+
+
+
+async function showContainerMenu() {
+    const cfg = await config();
+    let containerRoot = cfg.container_root ?? '~/development';
+    if (containerRoot.startsWith('~/')) {
+        containerRoot = join(homedir(), containerRoot.substring(2));
+    }
+    containerRoot = resolve(containerRoot);
+
+    const choices = await Promise.all( (await findDevContainerFiles())
+    .map(async (file) =>{
+        const data = await readJsonFile(file);
+        return {
+            type: 'choice',
+            name: data.name,
+            short: dirname(dirname(file)).substring(containerRoot.length),
+            value: {
+                path: file,
+                dir: dirname(dirname(file))
+            }
+        } as ListChoiceOptions
+    }));
+
+    const answers = await inquirer.prompt({
+        type: 'list',
+        name: 'container',
+        message: 'Select a dev container',
+        choices
+    } as ListQuestion) as any;
+
+    console.log(answers);
+
+}
+
+
+async function findDevContainerFiles() {
+    const cfg = await config();
+    let containerRoot = cfg.container_root ?? '~/development';
+    if (containerRoot.startsWith('~/')) {
+        containerRoot = join(homedir(), containerRoot.substring(2));
+    }
+    containerRoot = resolve(containerRoot);
+    return await glob('**/.devcontainer/devcontainer.json', { cwd: containerRoot, dot: true })
+}
+
+async function findDevContainerFolders() {
+    return (await findDevContainerFiles()).map(c => dirname(dirname(c)));
+}
+
+async function findDevContainerWorkspaces(containerFolder: string) {
+    return await glob('**/*.code-workspace', { cwd: containerFolder });
 }
