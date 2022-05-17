@@ -19,7 +19,7 @@ export async function launchVSCodeDevContainer(containerPath: string = '.', open
 
 
 export async function installVSCodeExtension(idOrPath: string, options?: { preRelease?: boolean, force?: boolean }) {
-    const command = `code --install-extension ${idOrPath} ${options.preRelease ? '--pre-release' : ''} ${options.force ? '--force' : ''}`;
+    const command = `code --install-extension ${idOrPath} ${options?.preRelease ? '--pre-release' : ''} ${options?.force ? '--force' : ''}`;
     await exec(command);
 }
 
