@@ -69,7 +69,8 @@ async function cloneDevContainer() {
         repo = repo.substring('https://github.com/'.length);
     }
     if (repo.startsWith('https://') || repo.startsWith('http://')) {
-        throw new Error('Only https://github.com is currenly supported');
+        console.error('Only https://github.com is currently supported');
+        exit(1);
     }
 
     const path = join(containerRoot, repo);
@@ -77,7 +78,19 @@ async function cloneDevContainer() {
     if (!!result) {
         exit(result);
     }
+
+    await showClonedContainerOptions(repo);
+
 }
+
+async function showClonedContainerOptions(repo: string) {
+    const devCont = (await buildContainerChoices()).find(c => c.value.shortDir === repo);
+    if (devCont) {
+        await showContainerWorkspaceMenu(devCont.value);
+    }
+}
+
+
 
 async function createDevContainer() {
 
@@ -102,15 +115,14 @@ interface ContainerWorkspaceMenuItem {
     absPath: string;
 }
 
-async function showContainerMenu() {
+async function buildContainerChoices() {
     const cfg = await config();
     let containerRoot = cfg.container_root ?? '~/development';
     if (containerRoot.startsWith('~/')) {
         containerRoot = join(homedir(), containerRoot.substring(2));
     }
     containerRoot = resolve(containerRoot);
-
-    const choices = await Promise.all((await findDevContainerFiles())
+    return await Promise.all((await findDevContainerFiles())
         .map(async (file) => {
             const configPath = join(containerRoot, file);
             const rootDir = dirname(dirname(configPath));
@@ -128,9 +140,12 @@ async function showContainerMenu() {
                     shortDir,
                     config
                 } as ContainerMenuItem
-            } as ListChoiceOptions
+            }
         }));
+}
 
+async function showContainerMenu() {
+    const choices = await buildContainerChoices();
     if (choices.length) {
         const answers = await inquirer.prompt({
             type: 'list',
@@ -143,8 +158,6 @@ async function showContainerMenu() {
         console.error(chalk.yellow(`You do not have any dev containers.`))
         exit(1);
     }
-
-
 }
 
 async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
