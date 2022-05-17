@@ -195,26 +195,23 @@ async function mainMenu() {
 
         switch (answer.action) {
             case 'clone':
-                await cloneDevContainer();
-                exit(0);
+                await cloneDevContainer() && exit(0);
             case 'create':
-                await createDevContainer();
-                exit(0);
+                await createDevContainer() && exit(0);
             case 'launch':
-                await launchDevContainer();
-                exit(0);
+                await launchDevContainer() && exit(0);
         }
 
     }
 
     async function cloneDevContainer() {
-         await exec('devenv containers clone');
+        return await exec('devenv containers clone');
     }
     async function createDevContainer() {
-        await exec('devenv containers create');
+        return await exec('devenv containers create');
     }
     async function launchDevContainer() {
-        await exec('devenv containers open');
+        return await exec('devenv containers open');
     }
 
 }
