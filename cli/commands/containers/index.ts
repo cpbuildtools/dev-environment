@@ -21,17 +21,17 @@ export const command = 'containers';
 export const describe = 'Containers Menu';
 export const builder = (yargs: Argv) => {
     return yargs
-        .command('clone', 'Clone a dev container', 
-            builder => builder, 
-            args =>cloneDevContainer()
+        .command('clone', 'Clone a dev container',
+            builder => builder,
+            args => cloneDevContainer()
         )
-        .command('create', 'Create a dev container', 
-            builder => builder, 
-            args =>createDevContainer()
+        .command('create', 'Create a dev container',
+            builder => builder,
+            args => createDevContainer()
         )
-        .command('open', 'open a dev container', 
-            builder => builder, 
-            args =>launchDevContainer()
+        .command('open', 'open a dev container',
+            builder => builder,
+            args => launchDevContainer()
         )
         ;
 };
@@ -72,25 +72,16 @@ async function cloneDevContainer() {
     }
 
     const path = join(containerRoot, repo);
-
-    if (existsSync(path)) {
-        const git = simpleGit(path);
-        const isRepo = await git.checkIsRepo();
-        if (isRepo) {
-            const origin = (await git.getRemotes(true)).find(r => r.name === 'origin');
-            console.log('origin', origin);
-        }
-    } else {
-        var result = await exec(`gh repo clone ${repo} ${path}`);
-        if (!!result) {
-            exit(result);
-        }
+    var result = await exec(`gh repo clone ${repo} ${path}`);
+    if (!!result) {
+        exit(result);
     }
+}
+
+async function createDevContainer() {
 
 }
-async function createDevContainer() {
-    
-}
+
 async function launchDevContainer() {
-    
+
 }
