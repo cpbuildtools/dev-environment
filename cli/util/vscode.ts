@@ -13,11 +13,11 @@ export async function launchVSCodeDevContainer(containerPath: string = '.', open
 
     const hexPath = Buffer.from(await translateWslPath(containerPath)).toString('hex');
     let uri = `vscode-remote://dev-container+${hexPath}/${open ?? ''}`;
-    //return exec(`code --${flag} "${uri}"`);
+    const cmd = `code --${flag} "${uri}"`;
+    
+    console.log(cmd);
 
-    spawn(`code --${flag} "${uri}"`, {shell: true, detached: true, stdio: 'inherit'}).on('exit', (code) => {
-        console.log('code', code ?? 0);
-    });
+    spawn(cmd, {shell: true, detached: true, stdio: 'inherit'});
 }
 
 /*
