@@ -140,7 +140,8 @@ async function showContainerMenu() {
         } as ListQuestion) as any;
         await showContainerWorkspaceMenu(answers.container);
     } else {
-        console.warn(chalk.yellow(`You do not have any dev containers.`))
+        console.error(chalk.yellow(`You do not have any dev containers.`))
+        exit(1);
     }
 
 
