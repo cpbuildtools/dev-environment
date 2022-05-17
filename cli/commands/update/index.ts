@@ -36,12 +36,15 @@ export const builder = (yargs: Argv) => {
             type: 'boolean',
             description: "Only update or install core apps",
             default: false
+        }).command('extensions', '', builder => builder, async (args) => {
+            await installVSCodeExtension('ms-vscode-remote.vscode-remote-extensionpack', { force: true });
+            await installVSCodeExtension('ms-azuretools.vscode-docker', { force: true });
         })
         ;
 };
 
 export const handler = async (args: any) => {
-    await updateCli();
+    await updateCli(); 
     if (!args.cli) {
         await updateApps(args.coreOnly, args.updateOnly);
     }
