@@ -151,7 +151,7 @@ async function mainMenu() {
             case 'show':
                 await showConfig();
                 exit(0);
-            case 'apps':
+            case 'update':
                 await updateConfig();
                 exit(0);
         }
