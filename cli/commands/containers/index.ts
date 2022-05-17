@@ -199,5 +199,7 @@ async function findDevContainerFolders() {
 }
 
 async function findDevContainerWorkspaces(containerFolder: string) {
-    return await glob('**/*.code-workspace', { cwd: join(containerFolder, 'workspaces') });
+    const ws = await glob('**/*.code-workspace', { cwd: join(containerFolder, 'workspaces') });
+    console.log(ws);
+    return ws;
 }

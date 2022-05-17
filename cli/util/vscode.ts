@@ -19,21 +19,3 @@ export async function launchVSCodeDevContainer(containerPath: string = '.', open
 
     spawn(cmd, { shell: true, detached: true, stdio: 'inherit' });
 }
-
-/*
-
-export function exec(cmd: string, { cwd }: { cwd?: string } = {}): Promise<number> {
-    return new Promise((res, rej) => {
-        try {
-            const child = spawn(cmd, { shell: true, stdio: 'inherit', cwd, env: process.env });
-            child.on('exit', (code) => {
-                res(code ?? 0);
-            });
-        }
-        catch (e) {
-            rej(e);
-        }
-    });
-}
-
-*/
