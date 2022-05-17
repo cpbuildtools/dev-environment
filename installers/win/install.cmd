@@ -1,6 +1,6 @@
 @echo off
 
-winget list Canonical.Ubuntu.2004 > nul 2>&1 && goto ubuntuInstalled
+winget list Canonical.Ubuntu.2004 && goto ubuntuInstalled
 
 echo [96mInstalling Ubuntu 20.04[0m
 winget install Canonical.Ubuntu.2004 --accept-package-agreements --accept-source-agreements
