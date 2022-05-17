@@ -58,7 +58,7 @@ async function mainMenu() {
         answer = await inquirer.prompt({
             type: 'list',
             name: 'action',
-            message: 'Menu',
+            message: 'Main Menu >',
             choices: menu
         } as ListQuestion) as any;
 
