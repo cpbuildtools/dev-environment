@@ -26,7 +26,7 @@ wsl -t Ubuntu-20.04
 
 :ubuntuInstalled
 echo ubuntuInstalled
-echo [96mDownloading Ubuntu [93m20.04[96m Installer...[0m
+echo [96mDownloading [93mDev Enviroment Cli[96m...[0m
 
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "rm -f ~/dev-env-installer.sh"
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "curl --ssl %repo%/installers/wsl/install.sh -o ~/dev-env-installer.sh"
