@@ -68,6 +68,8 @@ async function mainMenu() {
                 break;
             case 'config':
                 await configMenu();
+            case 'containers':
+                await containerMenu();
                 break;
         }
     }
@@ -92,7 +94,7 @@ async function mainMenu() {
         const answer = await inquirer.prompt({
             type: 'list',
             name: 'action',
-            message: '',
+            message: 'Action',
             choices: menu
         } as ListQuestion);
 
@@ -156,6 +158,57 @@ async function mainMenu() {
 
     async function updateConfig() {
         await exec('devenv config');
+    }
+
+    async function containerMenu() {
+        const menu = [
+            {
+                name: 'Launch',
+                value: 'launch'
+            },
+            {
+                name: 'Clone',
+                value: 'clone'
+            },
+            {
+                name: 'Create',
+                value: 'create'
+            },
+            {
+                name: 'Cancel',
+                value: 'cancel'
+            }
+        ];
+
+        const answer = await inquirer.prompt({
+            type: 'list',
+            name: 'action',
+            message: 'Action',
+            choices: menu
+        } as ListQuestion);
+
+        switch (answer.action) {
+            case 'clone':
+                await cloneDevContainer();
+                exit(0);
+            case 'create':
+                await createDevContainer();
+                exit(0);
+            case 'launch':
+                await launchDevContainer();
+                exit(0);
+        }
+
+    }
+
+    async function cloneDevContainer() {
+      // await exec('devenv config show');
+    }
+    async function createDevContainer() {
+      // await exec('devenv config show');
+    }
+    async function launchDevContainer() {
+      // await exec('devenv config show');
     }
 
 }
