@@ -231,20 +231,22 @@ async function mainMenu() {
         if (repo.startsWith('https://github.com/')) {
             repo = repo.substring('https://github.com/'.length);
         }
-
         if (repo.startsWith('https://') || repo.startsWith('http://')) {
             throw new Error('Only https://github.com is currenly supported');
         }
 
         const path = join(containerRoot, repo);
 
-        if (existsSync(path)){
+        if (existsSync(path)) {
             const git = simpleGit(path);
             const isRepo = await git.checkIsRepo();
-            if(isRepo){
+            if (isRepo) {
                 const origin = (await git.getRemotes(true)).find(r => r.name === 'origin');
                 console.log('origin', origin);
             }
+        } else {
+            var result = await exec(`gh repo clone ${repo} ${path}`);
+            console.log('result', result)
         }
 
     }
