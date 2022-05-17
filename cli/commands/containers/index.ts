@@ -6,7 +6,7 @@ import { homedir } from 'os';
 import { dirname, join, resolve, parse } from 'path';
 import { exit } from 'process';
 import { Argv } from 'yargs';
-import { exec } from '../../util/cmd';
+import { exec, run } from '../../util/cmd';
 import { readJsonFile } from '../../util/json';
 import { launchVSCodeDevContainer } from '../../util/vscode';
 import { config } from '../configure';
@@ -74,10 +74,8 @@ async function cloneDevContainer() {
     }
 
     const path = join(containerRoot, repo);
-    var result = await exec(`gh repo clone ${repo} ${path}`);
-    if (!!result) {
-        exit(result);
-    }
+    await run(`gh repo clone ${repo} ${path}`);
+
 
     await showClonedContainerOptions(repo);
 
