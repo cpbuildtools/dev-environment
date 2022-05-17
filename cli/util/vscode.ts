@@ -4,7 +4,7 @@ import { spawn } from 'child_process';
 import { translateWslPath } from "./wsl";
 
 export function launchVSCode(path: string = '.') {
-    spawn(`code ${path}`, { shell: true, detached: true, stdio: 'inherit' });
+    spawn(`code ${path}`, { shell: true, detached: true, stdio: 'ignore' });
 }
 
 export async function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
@@ -17,5 +17,5 @@ export async function launchVSCodeDevContainer(containerPath: string = '.', open
 
     console.log(cmd);
 
-    spawn(cmd, { shell: true, detached: true, stdio: 'inherit' });
+    spawn(cmd, { shell: true, detached: true, stdio: 'ignore' });
 }
