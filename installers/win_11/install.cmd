@@ -12,7 +12,7 @@ goto :eof
 
 :enableWSL
 echo Enabling Windows Subsystem for Linux. This can take a while...
-wsl --install > nul 2>&1
+wsl --install
 
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "devenvInstaller" /d "%temp%\devenv_intaller.cmd" /f
 echo.
