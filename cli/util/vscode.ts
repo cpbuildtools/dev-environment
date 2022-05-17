@@ -4,21 +4,21 @@ import { spawn } from 'child_process';
 import { translateWslPath } from "./wsl";
 
 export function launchVSCode(path: string = '.') {
-    spawn(`code ${path}`, {shell: true, detached: true, stdio: 'inherit'});
+    spawn(`code ${path}`, { shell: true, detached: true, stdio: 'inherit' });
 }
 
 export async function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
     open = undefined;
-    const isWS = extname(open) === '.code-workspace';
+    const isWS = extname(open ?? '') === '.code-workspace';
     const flag = isWS ? 'file-uri' : 'folder-uri';
 
     const hexPath = Buffer.from(await translateWslPath(containerPath)).toString('hex');
     let uri = `vscode-remote://dev-container+${hexPath}/${open ?? ''}`;
     const cmd = `code --${flag} "${uri}"`;
-    
+
     console.log(cmd);
 
-    spawn(cmd, {shell: true, detached: true, stdio: 'inherit'});
+    spawn(cmd, { shell: true, detached: true, stdio: 'inherit' });
 }
 
 /*
