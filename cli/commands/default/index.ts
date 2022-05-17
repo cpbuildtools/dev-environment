@@ -208,53 +208,13 @@ async function mainMenu() {
     }
 
     async function cloneDevContainer() {
-        const cfg = await config();
-        const user = cfg.github_user;
-        const token = cfg.github_token;
-        let containerRoot = cfg.container_root ?? '~/development';
-        if (containerRoot.startsWith('~/')) {
-            containerRoot = join(homedir(), containerRoot.substring(2));
-        }
-        containerRoot = resolve(containerRoot);
-
-        const answer = await inquirer.prompt({
-            type: 'input',
-            name: 'repo',
-            message: 'Repository to clone:',
-            default: `${user}/devcontainer-default`
-        } as InputQuestion);
-
-        let repo = answer.repo as string;
-        if (repo.startsWith('https://github.com/') && repo.endsWith('.git')) {
-            repo = repo.substring('https://github.com/'.length, repo.lastIndexOf('.'));
-        }
-        if (repo.startsWith('https://github.com/')) {
-            repo = repo.substring('https://github.com/'.length);
-        }
-        if (repo.startsWith('https://') || repo.startsWith('http://')) {
-            throw new Error('Only https://github.com is currenly supported');
-        }
-
-        const path = join(containerRoot, repo);
-
-        if (existsSync(path)) {
-            const git = simpleGit(path);
-            const isRepo = await git.checkIsRepo();
-            if (isRepo) {
-                const origin = (await git.getRemotes(true)).find(r => r.name === 'origin');
-                console.log('origin', origin);
-            }
-        } else {
-            var result = await exec(`gh repo clone ${repo} ${path}`);
-            console.log('result', result)
-        }
-
+         await exec('devenv containers clone');
     }
     async function createDevContainer() {
-        // await exec('devenv config show');
+        await exec('devenv containers create');
     }
     async function launchDevContainer() {
-        // await exec('devenv config show');
+        await exec('devenv containers open');
     }
 
 }
