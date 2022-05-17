@@ -127,11 +127,11 @@ async function mainMenu() {
     async function configMenu() {
         const menu = [
             {
-                name: 'Show Config',
+                name: 'Show',
                 value: 'show'
             },
             {
-                name: 'Update Config',
+                name: 'Update',
                 value: 'update'
             },
             {
@@ -169,7 +169,7 @@ async function mainMenu() {
     async function containerMenu() {
         const menu = [
             {
-                name: 'Launch',
+                name: 'Open',
                 value: 'launch'
             },
             {
@@ -177,7 +177,7 @@ async function mainMenu() {
                 value: 'clone'
             },
             {
-                name: 'Create',
+                name: 'Create [NYI]',
                 value: 'create'
             },
             {
