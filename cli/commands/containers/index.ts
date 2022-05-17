@@ -108,10 +108,10 @@ async function showContainerMenu() {
             name: `${name} [${root}]`,
             short: name,
             value: {
-                name,
                 path,
                 file,
-                root
+                root,
+                data
             }
         } as ListChoiceOptions
     }));
