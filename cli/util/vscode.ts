@@ -3,7 +3,7 @@ import { exec } from "./cmd";
 
 
 export function launchVSCode(path: string = '.') {
-    return exec(`code.exe ${path}`);
+    return exec(`code ${path}`);
 }
 
 export function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
@@ -11,5 +11,5 @@ export function launchVSCodeDevContainer(containerPath: string = '.', open?: str
     const flag = isWS ? 'file-uri' : 'folder-uri';
     const hexPath = Buffer.from(containerPath).toString('hex');
     let uri = `vscode-remote://dev-container+${hexPath}/${open ?? ''}`;
-    return exec(`code.exe --${flag} "${uri}"`);
+    return exec(`code --${flag} "${uri}"`);
 }
