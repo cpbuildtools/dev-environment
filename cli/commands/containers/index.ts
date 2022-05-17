@@ -7,6 +7,7 @@ import { exit } from 'process';
 import { Argv } from 'yargs';
 import { exec } from '../../util/cmd';
 import { readJsonFile } from '../../util/json';
+import { launchVSCodeDevContainer } from '../../util/vscode';
 import { config } from '../configure';
 
 const homePath = homedir();
@@ -81,15 +82,13 @@ async function createDevContainer() {
 
 }
 
-async function launchDevContainer() {
 
-}
 
 interface ContainerMenuItem {
     configPath: string;
     rootDir: string;
     shortDir: string;
-    data: {
+    config: {
         name: string;
         [k: string]: unknown;
     };
@@ -115,8 +114,8 @@ async function showContainerMenu() {
             const rootDir = dirname(dirname(configPath));
             const shortDir = dirname(dirname(file));
 
-            const data = await readJsonFile(configPath);
-            const name = data.name;
+            const config = await readJsonFile(configPath);
+            const name = config.name;
             return {
                 type: 'choice',
                 name: `${name} [${shortDir}]`,
@@ -125,7 +124,7 @@ async function showContainerMenu() {
                     configPath,
                     rootDir,
                     shortDir,
-                    data
+                    config
                 } as ContainerMenuItem
             } as ListChoiceOptions
         }));
@@ -159,17 +158,24 @@ async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
         type: 'choice',
         name: "No Workspace (open dev container directly)",
         short: "No Workspace",
-        value: null
+        value: {
+            container
+        }
     });
 
     const answers = await inquirer.prompt({
         type: 'list',
-        name: 'workspace',
+        name: 'selection',
         message: 'Select a workspace',
         choices
     } as ListQuestion) as any;
 
-    console.log(answers);
+    await launchDevContainer(answers.selection);
+
+}
+
+async function launchDevContainer(selection:ContainerWorkspaceMenuItem) {
+    await launchVSCodeDevContainer(selection.container.rootDir, selection.path)
 
 }
 
