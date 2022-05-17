@@ -13,7 +13,10 @@ export function launchVSCodeDevContainer(containerPath: string = '.', open?: str
     let uri = `vscode-remote://dev-container+${hexPath}/${open ?? ''}`;
     //return exec(`code --${flag} "${uri}"`);
 
-    spawn(`code --${flag} "${uri}"`, {detached: true, stdio: 'inherit'});
+    spawn(`code --${flag} "${uri}"`, {detached: true, stdio: 'inherit'}).on('exit', (code) => {
+        console.log('code', code ?? 0);
+    });
+
 }
 
 /*
