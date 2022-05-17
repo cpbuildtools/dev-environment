@@ -13,6 +13,7 @@ import { readJsonFile, writeJsonFile } from '../../util/json';
 import { rebootWindows } from '../../util/reboot';
 import { sleep } from '../../util/sleep';
 import { escapeString } from '../../util/strings';
+import { installVSCodeExtension } from '../../util/vscode';
 import { config, promptConfig } from '../configure';
 
 
@@ -66,9 +67,18 @@ export const handler = async (argv: Arguments) => {
     } else if (argv.resume === 1) {
         await setupDockerDesktop(argv.appdata as string);
         await initializeDevContainers();
+
+        await installVSCodeExtensions();
         await initialized();
     }
 };
+
+async function installVSCodeExtensions() {
+    await installVSCodeExtension('ms-vscode-remote.vscode-remote-extensionpack');
+    await installVSCodeExtension('ms-azuretools.vscode-docker');
+}
+
+
 
 async function installConfig(setConfig: string[]) {
     await promptConfig(setConfig);

@@ -58,7 +58,7 @@ async function cloneDevContainer() {
         type: 'input',
         name: 'repo',
         message: 'Repository to clone:',
-        default: `${user}/devcontainer-default`
+        //default: `${user}/devcontainer-default`
     } as InputQuestion);
 
     let repo = answer.repo as string;

@@ -15,3 +15,12 @@ export async function launchVSCodeDevContainer(containerPath: string = '.', open
     const cmd = `code --${flag} "${uri}"`;
     spawn(cmd, { shell: true, detached: true, stdio: 'ignore' });
 }
+
+
+export async function installVSCodeExtension(idOrPath: string, options?: { preRelease?: boolean, force?: boolean }) {
+    const command = `code --install-extension ${idOrPath} ${options.preRelease ? '--pre-release' : ''} ${options.force ? '--force' : ''}`;
+}
+
+export async function uninstallVSCodeExtension(id: string) {
+    const command = `code --uninstall-extension ${id} `
+}
