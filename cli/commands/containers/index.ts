@@ -1,4 +1,5 @@
 
+import chalk from 'chalk';
 import glob from 'fast-glob';
 import inquirer, { InputQuestion, ListChoiceOptions, ListQuestion } from 'inquirer';
 import { homedir } from 'os';
@@ -130,14 +131,19 @@ async function showContainerMenu() {
             } as ListChoiceOptions
         }));
 
-    const answers = await inquirer.prompt({
-        type: 'list',
-        name: 'container',
-        message: 'Select a dev container',
-        choices
-    } as ListQuestion) as any;
+    if (choices.length) {
+        const answers = await inquirer.prompt({
+            type: 'list',
+            name: 'container',
+            message: 'Select a dev container',
+            choices
+        } as ListQuestion) as any;
+        await showContainerWorkspaceMenu(answers.container);
+    } else {
+        console.warn(chalk.yellow(`You do not have any dev containers.`))
+    }
 
-    await showContainerWorkspaceMenu(answers.container);
+
 }
 
 async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
@@ -175,14 +181,13 @@ async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
 
 }
 
-async function launchDevContainer(selection:ContainerWorkspaceMenuItem) {
+async function launchDevContainer(selection: ContainerWorkspaceMenuItem) {
     console.log(selection);
     launchVSCodeDevContainer(
-        selection.container.rootDir, 
+        selection.container.rootDir,
         join(selection.container.config.workspaceFolder, selection.path ?? '')
     );
 }
-
 
 async function findDevContainerFiles() {
     const cfg = await config();
@@ -199,7 +204,5 @@ async function findDevContainerFolders() {
 }
 
 async function findDevContainerWorkspaces(containerFolder: string) {
-    const ws = await glob('**/*.code-workspace', { cwd: join(containerFolder, 'workspaces') });
-    console.log(ws);
-    return ws;
+    return await glob('**/*.code-workspace', { cwd: join(containerFolder, 'workspaces') });
 }

@@ -10,12 +10,8 @@ export function launchVSCode(path: string = '.') {
 export async function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
     const isWS = extname(open ?? '') === '.code-workspace';
     const flag = isWS ? 'file-uri' : 'folder-uri';
-
     const hexPath = Buffer.from(await translateWslPath(containerPath)).toString('hex');
     let uri = `vscode-remote://dev-container+${hexPath}/${open ?? ''}`;
     const cmd = `code --${flag} "${uri}"`;
-
-    console.log(cmd);
-
     spawn(cmd, { shell: true, detached: true, stdio: 'ignore' });
 }
