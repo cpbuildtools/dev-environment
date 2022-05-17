@@ -8,6 +8,7 @@ export function launchVSCode(path: string = '.') {
 }
 
 export async function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
+    open = undefined;
     const isWS = extname(open) === '.code-workspace';
     const flag = isWS ? 'file-uri' : 'folder-uri';
 
