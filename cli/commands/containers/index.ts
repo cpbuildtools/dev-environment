@@ -99,14 +99,19 @@ async function showContainerMenu() {
 
     const choices = await Promise.all( (await findDevContainerFiles())
     .map(async (file) =>{
-        const data = await readJsonFile(join(containerRoot, file));
+        const path = join(containerRoot, file);
+        const root = dirname(dirname(file));
+        const data = await readJsonFile(path);
+        const name = data.name;
         return {
             type: 'choice',
-            name: data.name,
-            short: dirname(dirname(file)),
+            name: `${name} [${root}]`,
+            short: name,
             value: {
-                path: file,
-                root: dirname(dirname(file))
+                name,
+                path,
+                file,
+                root
             }
         } as ListChoiceOptions
     }));
