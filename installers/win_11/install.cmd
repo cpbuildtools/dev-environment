@@ -6,7 +6,7 @@ echo wsl --shutdown
 wsl --shutdown
 wsl --set-default-version 2 > nul 2>&1
 
-echo Wsl ready.
+echo WSL ready.
 install.cmd 
 goto :eof
 
