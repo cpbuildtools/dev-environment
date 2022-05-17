@@ -79,7 +79,6 @@ async function installVSCodeExtensions() {
 }
 
 
-
 async function installConfig(setConfig: string[]) {
     await promptConfig(setConfig);
 }

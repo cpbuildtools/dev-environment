@@ -9,6 +9,7 @@ import { exit } from 'process';
 import { Argv } from 'yargs';
 import { installApplications, updateApplications } from '../../util/applications';
 import { exec } from '../../util/cmd';
+import { installVSCodeExtension } from '../../util/vscode';
 
 const homePath = homedir();
 
@@ -56,12 +57,14 @@ async function updateCli() {
     await rm(installPath, { recursive: true, force: true });
     await mkdir(installPath, { recursive: true });
     await cp(join(tmpPath, 'cli'), installPath, { recursive: true, force: true });
-    await exec(`pnpm i`, {cwd: installPath});
-    await exec(`pnpm link --global`, {cwd: installPath});
+    await exec(`pnpm i`, { cwd: installPath });
+    await exec(`pnpm link --global`, { cwd: installPath });
 }
 
 async function updateApps(coreOnly: boolean, updateOnly: boolean) {
     await installApps(coreOnly ? 'Core' : '*', updateOnly);
+    await installVSCodeExtension('ms-vscode-remote.vscode-remote-extensionpack', { force: true });
+    await installVSCodeExtension('ms-azuretools.vscode-docker', { force: true });
 }
 
 async function installApps(category: string, updateOnly: boolean) {
