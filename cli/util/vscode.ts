@@ -3,7 +3,7 @@ import { extname } from "path";
 import { spawn, exec } from 'child_process';
 
 export function launchVSCode(path: string = '.') {
-    spawn(`code ${path}`, {detached: true, stdio: 'inherit'});
+    spawn(`code ${path}`, {shell: true, detached: true, stdio: 'inherit'});
 }
 
 export function launchVSCodeDevContainer(containerPath: string = '.', open?: string) {
@@ -13,7 +13,7 @@ export function launchVSCodeDevContainer(containerPath: string = '.', open?: str
     let uri = `vscode-remote://dev-container+${hexPath}/${open ?? ''}`;
     //return exec(`code --${flag} "${uri}"`);
 
-    spawn(`code --${flag} "${uri}"`, {detached: true, stdio: 'inherit'}).on('exit', (code) => {
+    spawn(`code --${flag} "${uri}"`, {shell: true, detached: true, stdio: 'inherit'}).on('exit', (code) => {
         console.log('code', code ?? 0);
     });
 
