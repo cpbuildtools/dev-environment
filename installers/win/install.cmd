@@ -1,5 +1,4 @@
 @echo off
-
 winget list Canonical.Ubuntu.2004 > nul 2>&1 && goto ubuntuInstalled
 
 echo [96mInstalling Ubuntu 20.04[0m
@@ -25,8 +24,6 @@ taskkill /IM "ubuntu2004.exe" /F > nul 2>&1
 wsl -t Ubuntu-20.04
 
 :ubuntuInstalled
-
-
 echo [96mDownloading Ubuntu [93m20.04[96m Installer...[0m
 
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "rm -f ~/dev-env-installer.sh"
@@ -34,4 +31,6 @@ wsl -d Ubuntu-20.04 --cd ~ bash -ic "curl --ssl %repo%/installers/wsl/install.sh
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "chmod +x ~/dev-env-installer.sh"
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "./dev-env-installer.sh"
 wsl -d Ubuntu-20.04 --cd ~ bash -ic "cd ~/devenv-cli && ./install.sh"
-wsl -d Ubuntu-20.04 --cd ~ bash -ic "devenv install --appdata=\"%appdata%\""
+wsl -d Ubuntu-20.04 --cd ~ bash -ic "devenv install --appdata=\"%appdata%\"
+
+"
