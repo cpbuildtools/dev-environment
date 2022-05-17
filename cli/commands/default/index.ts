@@ -29,7 +29,7 @@ async function mainMenu() {
 
     console.info();
     console.info(chalk.green('********************************************************************'));
-    console.info(chalk.green('* Dev container prerequisites installed and configured             *'));
+    console.info(chalk.green('* Dev Environment Cli                                              *'));
     console.info(chalk.green('********************************************************************'));
     console.info();
 
@@ -67,7 +67,7 @@ async function mainMenu() {
             type: 'list',
             name: 'action',
             message: '',
-            menu
+            choices: menu
         } as ListQuestion) as any;
 
         switch (answer.action) {

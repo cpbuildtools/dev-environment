@@ -57,7 +57,7 @@ async function updateCli() {
     await mkdir(installPath, { recursive: true });
     await cp(join(tmpPath, 'cli'), installPath, { recursive: true, force: true });
     await exec(`pnpm i`, {cwd: installPath});
-    //await exec(`pnpm link --global`);
+    await exec(`pnpm link --global`, {cwd: installPath});
 }
 
 async function updateApps(coreOnly: boolean, updateOnly: boolean) {
