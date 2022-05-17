@@ -198,7 +198,6 @@ async function showContainerWorkspaceMenu(container: ContainerMenuItem) {
 }
 
 async function launchDevContainer(selection: ContainerWorkspaceMenuItem) {
-    console.log(selection);
     launchVSCodeDevContainer(
         selection.container.rootDir,
         join(selection.container.config.workspaceFolder, selection.path ?? '')
