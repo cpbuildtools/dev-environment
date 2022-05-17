@@ -1,10 +1,16 @@
 
 import chalk from 'chalk';
-import inquirer, { ListQuestion } from 'inquirer';
+import { existsSync } from 'fs';
+import { readdir } from 'fs/promises';
+import inquirer, { InputQuestion, ListQuestion } from 'inquirer';
 import { homedir } from 'os';
+import { join, resolve } from 'path';
 import { exit } from 'process';
+import simpleGit from 'simple-git';
 import { Argv } from 'yargs';
 import { exec } from '../../util/cmd';
+import { getEnv } from '../../util/env';
+import { config } from '../configure';
 
 const homePath = homedir();
 
@@ -202,13 +208,51 @@ async function mainMenu() {
     }
 
     async function cloneDevContainer() {
-      // await exec('devenv config show');
+        const cfg = await config();
+        const user = cfg.github_user;
+        const token = cfg.github_token;
+        let containerRoot = cfg.container_root ?? '~/development';
+        if (containerRoot.startsWith('~/')) {
+            containerRoot = join(homedir(), containerRoot.substring(2));
+        }
+        containerRoot = resolve(containerRoot);
+
+        const answer = await inquirer.prompt({
+            type: 'input',
+            name: 'repo',
+            message: 'Repository to clone:',
+            default: `${user}/devcontainer-default`
+        } as InputQuestion);
+
+        let repo = answer.repo as string;
+        if (repo.startsWith('https://github.com/') && repo.endsWith('.git')) {
+            repo = repo.substring('https://github.com/'.length, repo.lastIndexOf('.'));
+        }
+        if (repo.startsWith('https://github.com/')) {
+            repo = repo.substring('https://github.com/'.length);
+        }
+
+        if (repo.startsWith('https://') || repo.startsWith('http://')) {
+            throw new Error('Only https://github.com is currenly supported');
+        }
+
+        const path = join(containerRoot, repo);
+
+        if (existsSync(path)){
+            const git = simpleGit(path);
+            const isRepo = await git.checkIsRepo();
+            if(isRepo){
+                const origin = (await git.getRemotes(true)).find(r => r.name === 'origin');
+                console.log('origin', origin);
+            }
+        }
+
     }
     async function createDevContainer() {
-      // await exec('devenv config show');
+        // await exec('devenv config show');
     }
     async function launchDevContainer() {
-      // await exec('devenv config show');
+        // await exec('devenv config show');
     }
 
 }
