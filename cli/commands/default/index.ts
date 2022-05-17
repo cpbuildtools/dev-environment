@@ -43,7 +43,7 @@ async function mainMenu() {
 
     const menu = [
         {
-            name: 'Dev Containers',
+            name: 'Containers',
             value: 'containers'
         },
         {
@@ -64,7 +64,7 @@ async function mainMenu() {
         answer = await inquirer.prompt({
             type: 'list',
             name: 'action',
-            message: 'Main Menu >',
+            message: 'Select an option',
             choices: menu
         } as ListQuestion) as any;
 
