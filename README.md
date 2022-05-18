@@ -1,6 +1,4 @@
-# Install Prerequisites 
-
-
+# Installation 
 
 ## Windows 10/11
 
@@ -21,3 +19,27 @@
      ```
      curl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/install.cmd > "%temp%\devenv_intaller.cmd" && "%temp%\devenv_intaller.cmd"
      ``` 
+
+# CLI
+
+Open an Ubuntu 20.04 terminal and run the `devenv` command
+## Menu
+``` 
+devenv
+```
+## Help
+``` 
+devenv --help
+```
+```
+ Commands:
+  devenv config [key] [value]  configure the dev environment
+  devenv containers            Containers Menu
+  devenv                       Dev Env Menu                            [default]
+  devenv install               install the dev environment
+  devenv update                Update Dev Env
+
+Options:
+  --help     Show help                                                 [boolean]
+  --version  Show version number                                       [boolean]
+```
