@@ -111,11 +111,16 @@ export async function promptConfig(setValues?: string[], skipPrompt: boolean = f
         console.info(chalk.yellow('* User Information                                                 *'));
         console.info(chalk.yellow('********************************************************************'));
         console.info();
-        const answers = await prompt(q, argCfg);
-        Object.assign(cfg, answers);
+        try{
+            const answers = await prompt(q, argCfg);
+            Object.assign(cfg, answers);
+        }catch(e){
+            console.error(e);
+        }
     } else {
         Object.assign(cfg, argCfg);
     }
+    
     await saveConfig(cfg);
 }
 
@@ -152,12 +157,12 @@ export async function config(key?: string, value?: string) {
     } else {
         cfg[key] = value;
         await saveConfig(cfg);
-        //await writeJsonFile(configPath, cfg, 2);
     }
 }
 
 
 async function saveConfig(newCfg: any) {
+    console.info(chalk.grey('Checking config changes...'));
     let cfg: { [k: string]: string } = await config();
     const keys = Object.keys(cfg);
     const newKeys = Object.keys(newCfg);
@@ -174,10 +179,16 @@ async function saveConfig(newCfg: any) {
 
     const changed = (addKeys.length + removeKeys.length + changeKeys.length) > 0;
     if (changed) {
+        console.info(chalk.grey('Saving config...'));
         await handleConfigPropertyChanges('remove', removeKeys, newCfg);
         await handleConfigPropertyChanges('add', addKeys, newCfg);
         await handleConfigPropertyChanges('change', changeKeys, newCfg);
-        await writeJsonFile(configPath, newCfg, 2);
+        try{
+            await writeJsonFile(configPath, newCfg, 2);
+            console.info(chalk.grey('Saved.'));
+        }catch(e){
+            console.error(e);
+        }
     }
 }
 
