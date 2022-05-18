@@ -24,7 +24,7 @@ export async function rebootWindows(resumeCommand?: string): Promise<never> {
 
     const winFile = await translateWslPath(file);
 
-    await exec(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenv${rng} /d "cmd /K ${escapeString(winFile)}" /f`);
+    await exec(`reg.exe add "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce" /v !devenv${rng} /d "cmd ${escapeString(winFile)}" /f`);
     console.info();
     console.info(chalk.yellow('********************************************************************'))
     console.info(chalk.yellow('* Windows need to be restarted... because windows...               *'))
