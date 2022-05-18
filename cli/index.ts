@@ -3,6 +3,7 @@
 import { exit } from 'process';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { sleep } from './util/sleep';
 
 (async () => {
     try{
@@ -12,6 +13,7 @@ import { hideBin } from 'yargs/helpers';
             .parse();
     }catch(e){
         console.error(e);
+        await sleep(60 * 1000);
         exit(1);
     }
 })();
