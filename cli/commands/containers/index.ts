@@ -75,7 +75,7 @@ async function cloneDevContainer() {
 
     const path = join(containerRoot, repo);
     try{
-        await run(`export GITHUB_TOKEN=${token} && gh repo clone ${repo} ${path}`);
+        await run(`env && gh repo clone ${repo} ${path}`);
         await showClonedContainerOptions(repo);
     }catch(e){
         console.error(e);
