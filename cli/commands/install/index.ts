@@ -9,6 +9,7 @@ import { installApplications, updateApplications } from '../../util/applications
 import { exec } from '../../util/cmd';
 import { dockerLogin, getDockerConfigPath, getDockerDesktopPath, restartDocker } from '../../util/docker';
 import { getEnv } from '../../util/env';
+import { githubLogin } from '../../util/github';
 import { readJsonFile, writeJsonFile } from '../../util/json';
 import { rebootWindows } from '../../util/reboot';
 import { sleep } from '../../util/sleep';
@@ -125,8 +126,10 @@ async function setupDockerDesktop(windowsAppDataPath: string) {
 
         const user = getEnv('GITHUB_USER')!;
         const token = getEnv('GITHUB_TOKEN')!;
+       
         await dockerLogin('ghcr.io', user, token);
         await dockerLogin('docker.pkg.github.com', user, token);
+        await githubLogin(user, token);
 
     } catch (e) {
         console.error(e);
