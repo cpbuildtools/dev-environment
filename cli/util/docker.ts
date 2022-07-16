@@ -6,7 +6,7 @@ import { join } from 'path';
 import { existsSync } from 'fs'
 
 export async function dockerLogin(url: string, user: string, token: string) {
-    console.info(`Atempting to log docker into ${chalk.blueBright(url)} with user ${chalk.yellowBright(user)}`);
+    console.info(`Attempting to log docker into ${chalk.blueBright(url)} with user ${chalk.yellowBright(user)}`);
     const result = await exec(`echo "${token}" | docker login ${url} -u ${user} --password-stdin`);
     return !result;
 }
@@ -31,7 +31,7 @@ export async function startDockerDesktop(appdata: string) {
 }
 
 export async function restartDocker(appdata: string) {
-    console.info(chalk.gray('Restarting Dokcer Desktop...'));
+    console.info(chalk.gray('Restarting Docker Desktop...'));
     await killDocker();
     await startDockerDesktop(appdata);
     await waitForDockerInit(true);

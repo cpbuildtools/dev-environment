@@ -9,6 +9,8 @@ import { wslEnv } from '../../util/env';
 import { setConfig as setGitConfig } from '../../util/git';
 import { readJsonFile, writeJsonFile } from '../../util/json';
 import {homedir} from 'os';
+import { dockerLogin } from '../../util/docker';
+import { githubLogin } from '../../util/github';
 
 const homePath = homedir();
 const configPath = join(homePath, 'devenv-cli.config.json');
@@ -20,7 +22,12 @@ export const configPropertyChangeHandlers: { [property: string]: PropertyChangeH
     name: (action, value) => setGitConfig('user.name', value ?? ''),
     email: (action, value) => setGitConfig('user.email', value ?? ''),
     github_user: (action, value) => wslEnv('GITHUB_USER', value),
-    github_token: (action, value) => wslEnv('GITHUB_TOKEN', value),
+    github_token: async (action, value, name, cfg) => {
+        wslEnv('GITHUB_TOKEN', value);
+        await dockerLogin('ghcr.io', cfg.github_user, value);
+        await dockerLogin('docker.pkg.github.com', cfg.github_user, value);
+        await githubLogin(cfg.github_user, value);
+    },
 };
 
 
