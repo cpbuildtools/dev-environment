@@ -1,7 +1,6 @@
 import { readFile, writeFile } from 'fs/promises';
 
 export async function readJsonFile(path: string) {
-    console.log(`Reading json file '${path}'`);
     return JSON.parse(await readFile(path, { encoding: 'utf-8' }));
 }
 
