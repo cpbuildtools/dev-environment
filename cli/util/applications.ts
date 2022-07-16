@@ -8,6 +8,7 @@ interface IApplication {
     required: boolean;
     category: string;
     source: 'winget' | 'apt';
+    args?: string;
 }
 
 
@@ -18,7 +19,8 @@ const baseApplications: IApplication[] = [
         description: 'Microsoft Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications. Microsoft Visual Studio Code is free and available on your favorite platform - Linux, macOS, and Windows.',
         required: true,
         category: "Core",
-        source: 'winget'
+        source: 'winget',
+        args: "--scope machine"
     },
     {
         id: 'Docker.DockerDesktop',
