@@ -34,7 +34,7 @@ services:
       - web
 
   dns:
-    container_name: "devenv-dns"
+    container_name: "devenv-dns-server"
     restart: always
     image: jpillora/dnsmasq
     volumes:

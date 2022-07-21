@@ -51,4 +51,3 @@ cp -r ./.tmp/cli/* ./devenv-cli
 cd ./devenv-cli
 chmod +x ./install.sh
 pnpm i
-

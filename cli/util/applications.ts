@@ -55,6 +55,14 @@ const baseApplications: IApplication[] = [
         source: 'winget'
     },
     {
+        id: 'OpenJS.NodeJS.LTS',
+        name: 'NodeJS',
+        description: 'Node.js is a JavaScript runtime built on Chrome\'s V8 JavaScript engine.',
+        required: false,
+        category: "Utils",
+        source: 'winget'
+    },
+    {
         id: 'Google.Chrome',
         name: 'Google Chrome',
         description: 'A fast, secure, and free web browser built for the modern web. Chrome syncs bookmarks across all your devices, fills out forms automatically, and so much more.',

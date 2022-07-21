@@ -14,7 +14,7 @@
      ``` 
      winget --version
      ```
-  1. Open a cmd terminal as Administrator
+  1. Open windows terminal
   1. Run:  
      ```
      curl https://raw.githubusercontent.com/cpbuildtools/dev-environment/main/installers/install.cmd > "%temp%\devenv_intaller.cmd" && "%temp%\devenv_intaller.cmd"
