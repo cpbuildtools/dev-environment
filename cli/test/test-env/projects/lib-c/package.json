@@ -1,0 +1,9 @@
+{
+    "name": "lib-c",
+    "private": true,
+    "dependencies": {
+        "lib-b" : "~1.0.0",
+        "lib-a" : "~1.0.0"
+    },
+    "devDependencies": {}
+}
