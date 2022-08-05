@@ -8,7 +8,7 @@ const homePath = homedir();
  *  Command
  *********************************************************/
 
-export const command = "dv-startup <command>";
+export const command = "dc-start <command>";
 export const describe = false;
 
 export const builder = (yargs: Argv) => {
