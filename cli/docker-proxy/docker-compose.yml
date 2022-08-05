@@ -38,7 +38,7 @@ services:
     restart: always
     image: jpillora/dnsmasq
     volumes:
-      - ${PROXY_PATH}/dnsmasq.conf:/etc/dnsmasq.conf
+      - ./dnsmasq.conf:/etc/dnsmasq.conf
     ports:
       - 53:53/udp
       - 5380:8080
