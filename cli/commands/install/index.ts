@@ -28,6 +28,7 @@ export const command = "install";
 export const describe = "install the dev environment";
 export const builder = (yargs: Argv) => {
   return yargs
+    .help(false)
     .command(
       "install-apps [category]",
       "Installs Applications to the dev env",
