@@ -1,6 +1,8 @@
 import chalk from "chalk";
 import { homedir } from "os";
 import { Argv } from "yargs";
+import {exec} from '@cpbuildtools/dev-container-common';
+import path from "path/posix";
 
 const homePath = homedir();
 
@@ -21,8 +23,9 @@ export const builder = (yargs: Argv) => {
     );
 };
 
-function initialize() {
+async function initialize() {
   console.log(chalk.greenBright("initialize"));
+  await exec('docker-compose up -d', {cwd: path.join(__dirname, '../../docker-proxy')});
 }
 
 // End Command
