@@ -10,9 +10,6 @@ import { sleep } from './util/sleep';
         await yargs(hideBin(process.argv))
             .scriptName('devenv')
             .commandDir('./commands', { extensions: ['ts'], recurse: true })
-            .command('_init_dev_container_', false, (yargs) => yargs, (argv) =>{
-                
-            })
             .parse();
     }catch(e){
         console.error(e);
